@@ -2,11 +2,11 @@
 import {
     ApolloClient,
     InMemoryCache,
-    createHttpLink,
+    createHttpLink
 } from "@apollo/client";
 
 const httpLink = createHttpLink({
-  uri: process.env.REACT_APP_OSCAR_API_URL,
+  uri: process.env.REACT_APP_VELO_API_URL,
 });
 
 const client = new ApolloClient({
