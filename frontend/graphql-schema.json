@@ -122,15 +122,23 @@
         "fields": [
           {
             "name": "getAllPointsOfSale",
-            "description": null,
+            "description": "Liste des catégories",
             "args": [],
             "type": {
-              "kind": "LIST",
+              "kind": "NON_NULL",
               "name": null,
               "ofType": {
-                "kind": "OBJECT",
-                "name": "pointOfSale",
-                "ofType": null
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "pointOfSale",
+                    "ofType": null
+                  }
+                }
               }
             },
             "isDeprecated": false,

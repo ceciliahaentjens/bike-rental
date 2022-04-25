@@ -1,14 +1,14 @@
-import { Link } from 'react-router-dom';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 // Mui
 import { Container, Typography, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 // Queries
+import { GetAllPointsOfSale_getAllPointsOfSale, GetAllPointsOfSale } from '../../apollo/queries/__generated__/GetAllPointsOfSale';
 import { GET_ALL_POINTS_OF_SALE } from '../../apollo/queries/allPointsOfSale';
 
 function PointsOfSaleList() {
-    const { data: pointsOfSaleData } = useQuery(GET_ALL_POINTS_OF_SALE);
+    const { data: pointsOfSaleData } = useQuery<GetAllPointsOfSale>(GET_ALL_POINTS_OF_SALE);
 
     return (
         <Container>
@@ -22,7 +22,7 @@ function PointsOfSaleList() {
                         value={1}
                     >
                         {
-                            pointsOfSaleData && pointsOfSaleData.getAllPointsOfSale.map((pointOfSale: any) => (
+                            pointsOfSaleData && pointsOfSaleData.getAllPointsOfSale.map((pointOfSale: GetAllPointsOfSale_getAllPointsOfSale) => (
                                 <MenuItem key={pointOfSale.id} value={pointOfSale.id}>{pointOfSale.label}</MenuItem>
                             ))
                         }
