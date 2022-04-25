@@ -23,12 +23,13 @@
         "apollo-datasource-rest": "^3.5.1",
         "apollo-server": "^3.6.4",
         "bunyan": "^1.8.15",
-        "dataloader": "^2.0.0",
+        "dataloader": "^2.1.0",
         "datasource-sql": "^1.6.0",
         "debug": "^4.3.3",
         "dotenv": "^11.0.0",
         "faker": "^5.5.3",
         "graphql": "^16.3.0",
+        "graphql-depth-limit": "^1.1.0",
         "pg": "^8.7.1"
     },
     "devDependencies": {

@@ -6,4 +6,6 @@ Récupérer les données
 """
 type Query {
     hello: Hello
+
+    getAllPointsOfSale: [pointOfSale]
 }
