@@ -1,4 +1,4 @@
-"Une critique de film"
+"Exemple de Schema"
 type Hello {
     world: String
 }
