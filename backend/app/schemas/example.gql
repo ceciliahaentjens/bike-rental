@@ -1,0 +1,8 @@
+"Une critique de film"
+type Hello {
+    world: String
+}
+
+input HelloInput {
+    world: String
+}

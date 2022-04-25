@@ -1,0 +1,4 @@
+"Ajouter/modifier/supprimer des données"
+type Mutation {
+    exampleHello(input: HelloInput!): Hello
+}

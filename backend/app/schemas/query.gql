@@ -1,0 +1,9 @@
+# Le type query est un type spécial
+# Chacune de ses propriétés va représenter un "point d'entrée" de notre API
+# Du quel on pourra faire partir nos requêtes
+"""
+Récupérer les données
+"""
+type Query {
+    hello: Hello
+}

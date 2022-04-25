@@ -1,0 +1,26 @@
+{
+    "point_of_sale": [{
+        "label": "Douai"
+    }, {
+        "label": "Paris 15ème"
+    }, {
+        "label": "Marseille"
+    }, {
+        "label": "Toulouse"
+    }, {
+        "label": "Bordeaux"
+    }],
+    "type_of_bike": [{
+        "label": "Gazelle",
+        "price": 10
+    }, {
+        "label": "Vélo avec remorque",
+        "price": 17
+    }, {
+        "label": "Sport Xtreme",
+        "price": 23.5
+    }, {
+        "label": "Électrique",
+        "price": 35
+    }]
+}

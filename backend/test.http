@@ -1,0 +1,29 @@
+@endpoint = http://localhost:{{$dotenv PORT}}/graphql
+
+### Exemple de query
+POST {{ endpoint }}
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query hello{
+  hello {
+    world
+  }
+}
+
+### Exemple de mutation
+POST {{ endpoint }}
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation exampleHello($input: HelloInput!) {
+  exampleHello(input: $input) {
+    world
+  }
+}
+
+{
+  "input": {
+    "world": "World"
+  }
+}
