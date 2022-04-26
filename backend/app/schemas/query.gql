@@ -9,6 +9,9 @@ type Query {
     "Liste des points de vente"
     getAllPointsOfSale: [PointOfSale!]!
 
+    "Liste des types de vélos"
+    getAllKindsOfBike: [KindOfBike!]!
+
     "Liste des vélos"
     getAllBikes: [Bike!]!
 
