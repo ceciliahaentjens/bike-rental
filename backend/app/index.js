@@ -8,6 +8,7 @@ const resolvers = require('./resolvers');
 const db = require('./db/pg');
 
 // DataSources
+const Rate = require('./datasources/rate');
 const PointOfSale = require('./datasources/pointOfSale');
 const KindOfBike = require('./datasources/kindOfBike');
 const Bike = require('./datasources/bike');
@@ -21,6 +22,7 @@ module.exports = {
     typeDefs,
     resolvers,
     dataSources: () => ({
+        rate: new Rate(),
         pointOfSale: new PointOfSale(knexConfig),
         kindOfBike: new KindOfBike(knexConfig),
         bike: new Bike(knexConfig),

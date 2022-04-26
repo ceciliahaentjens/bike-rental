@@ -20,7 +20,7 @@
     },
     "homepage": "https://github.com/O-clock-Alternance-CDA/O-scar-GraphQL",
     "dependencies": {
-        "apollo-datasource-rest": "^3.5.1",
+        "apollo-datasource-rest": "^3.5.2",
         "apollo-server": "^3.6.4",
         "bunyan": "^1.8.15",
         "dataloader": "^2.1.0",
