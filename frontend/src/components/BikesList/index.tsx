@@ -12,7 +12,6 @@ function BikesList() {
 
     // Je récupère les données de ma query
     const { data: bikesData } = useQuery<getAllBikes>(GET_ALL_BIKES);
-    console.log(bikesData);
 
     return (
         <Container>
@@ -43,7 +42,7 @@ function BikesList() {
                                     <TableCell align="right">{bike.kind.price}</TableCell>
                                     <TableCell align="right"></TableCell>
                                     <TableCell align="right">{bike.status}</TableCell>
-                                    <TableCell align="right"></TableCell>
+                                    <TableCell align="right">{bike.pointOfSale.label}</TableCell>
                                     <TableCell align="right"></TableCell>
                                 </TableRow>
                             ))

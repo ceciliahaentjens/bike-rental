@@ -14,12 +14,19 @@ export interface getAllBikes_getAllBikes_kind {
   price: string;
 }
 
+export interface getAllBikes_getAllBikes_pointOfSale {
+  __typename: "PointOfSale";
+  id: number;
+  label: string;
+}
+
 export interface getAllBikes_getAllBikes {
   __typename: "Bike";
   id: number;
   number: string;
   status: string;
   kind: getAllBikes_getAllBikes_kind;
+  pointOfSale: getAllBikes_getAllBikes_pointOfSale;
 }
 
 export interface getAllBikes {

@@ -11,6 +11,10 @@ export const GET_ALL_BIKES = gql`
                 label
                 price
             }
+            pointOfSale {
+                id
+                label
+            }
         }
     } 
 `;
