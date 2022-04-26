@@ -7,9 +7,13 @@ const { gql } = require('apollo-server');
 const { readFileSync, read } = require('fs');
 const path = require('path');
 
+// Scalars
+const scalars = readFileSync(path.join(__dirname, './scalars.gql'));
+
 // Types
 const example = readFileSync(path.join(__dirname, './example.gql'));
 const pointOfSale = readFileSync(path.join(__dirname, './pointOfSale.gql'));
+const rent = readFileSync(path.join(__dirname, './rent.gql'));
 const kindOfBike = readFileSync(path.join(__dirname, './kindOfBike.gql'));
 const bike = readFileSync(path.join(__dirname, './bike.gql'));
 
@@ -25,9 +29,13 @@ const mutation = readFileSync(path.join(__dirname, './mutation.gql'));
  */
 
 const schema = gql`
+    ${scalars}
+
     ${example}
 
     ${pointOfSale}
+
+    ${rent}
 
     ${kindOfBike}
 

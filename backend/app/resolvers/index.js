@@ -1,14 +1,19 @@
-// Types
-// TODO
+// Scalars
+// @see : https://www.graphql-scalars.dev/docs
+const {
+    DateTimeResolver: DateTime,
+} = require('graphql-scalars');
 
-// Query and mutations
+// Types
 const Bike = require('./bike');
+// Query and mutations
 const Query = require('./query');
 const Mutation = require('./mutation');
 
 module.exports = {
-    Bike,
+    DateTime,
 
+    Bike,
 
     // Liste des actions de récupération possibles
     Query,
