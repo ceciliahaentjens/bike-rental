@@ -7,7 +7,7 @@ module.exports = {
         return dataSources.pointOfSale.findByPk(parent.point_of_sale_id);
     },
 
-    async rents(parent, args, { dataSources }) {
+    rents(parent, args, { dataSources }) {
         return dataSources.rent.findByBike(parent.id, args);
     },
 };

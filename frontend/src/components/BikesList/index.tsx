@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import { useQuery } from '@apollo/client';
+
+// Helpers
+import { AVAILABLE_STATUS, getReadableStatus } from '../../helpers/status';
 
 // Mui
 import { Container, Stack, Divider, FormControl, InputLabel, Select, MenuItem, Box, Button, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Typography, Paper } from '@mui/material';
@@ -96,10 +101,11 @@ function BikesList() {
                             setStatus(event.target.value);
                         }}
                     >
-                        <MenuItem key="available" value="available">Disponible</MenuItem>
-                        <MenuItem key="rent" value="rent">Loué</MenuItem>
-                        <MenuItem key="repair" value="repair">En réparation</MenuItem>
-                        <MenuItem key="lost" value="lost">Perdu</MenuItem>
+                        {
+                            AVAILABLE_STATUS.map((status: any) => (
+                                <MenuItem key={status} value={status}>{getReadableStatus(status)}</MenuItem>
+                            ))
+                        }
                     </Select>
                 </FormControl>
                 <FormControl sx={{ m: 1, minWidth: 180 }} size="small">
@@ -155,7 +161,7 @@ function BikesList() {
                                             display: 'flex',
                                             justifyContent: 'flex-end'
                                         }}>
-                                            <Button color="primary" variant="contained" sx={{ mr: 2 }}>Détails</Button>
+                                            <Button color="primary" variant="contained" sx={{ mr: 2 }} component={Link} to={`/bikes/${bike.id}`}>Détails</Button>
                                             {
                                                 bike.status === 'AVAILABLE' && (
                                                     <Button color="success" variant="contained">Louer</Button>

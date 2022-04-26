@@ -15,4 +15,7 @@ type Query {
     "Liste des vélos"
     getAllBikes(skip: Int, take: Int): [Bike!]!
 
+    "Récupérer un vélo"
+    getBike(id: Int!): Bike
+
 }

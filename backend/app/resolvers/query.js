@@ -18,4 +18,9 @@ module.exports = {
         return data;
     },
 
+    async getBike(_, args, { dataSources }) {
+        const data = await dataSources.bike.findByPk(args.id);
+        return data;
+    },
+
 };
