@@ -19,3 +19,8 @@ export interface GetAllPointsOfSale {
    */
   getAllPointsOfSale: GetAllPointsOfSale_getAllPointsOfSale[];
 }
+
+export interface GetAllPointsOfSaleVariables {
+  skip?: number | null;
+  take?: number | null;
+}

@@ -35,3 +35,8 @@ export interface getAllBikes {
    */
   getAllBikes: getAllBikes_getAllBikes[];
 }
+
+export interface getAllBikesVariables {
+  skip?: number | null;
+  take?: number | null;
+}

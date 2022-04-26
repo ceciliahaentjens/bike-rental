@@ -20,3 +20,8 @@ export interface getAllKindsOfBike {
    */
   getAllKindsOfBike: getAllKindsOfBike_getAllKindsOfBike[];
 }
+
+export interface getAllKindsOfBikeVariables {
+  skip?: number | null;
+  take?: number | null;
+}

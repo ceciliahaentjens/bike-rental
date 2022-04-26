@@ -7,12 +7,12 @@ Récupérer les données
 type Query {
 
     "Liste des points de vente"
-    getAllPointsOfSale: [PointOfSale!]!
+    getAllPointsOfSale(skip: Int, take: Int): [PointOfSale!]!
 
     "Liste des types de vélos"
-    getAllKindsOfBike: [KindOfBike!]!
+    getAllKindsOfBike(skip: Int, take: Int): [KindOfBike!]!
 
     "Liste des vélos"
-    getAllBikes: [Bike!]!
+    getAllBikes(skip: Int, take: Int): [Bike!]!
 
 }
