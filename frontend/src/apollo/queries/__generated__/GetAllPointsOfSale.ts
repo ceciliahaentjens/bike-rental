@@ -8,14 +8,14 @@
 // ====================================================
 
 export interface GetAllPointsOfSale_getAllPointsOfSale {
-  __typename: "pointOfSale";
+  __typename: "PointOfSale";
   id: number;
   label: string;
 }
 
 export interface GetAllPointsOfSale {
   /**
-   * Liste des catégories
+   * Liste des points de vente
    */
   getAllPointsOfSale: GetAllPointsOfSale_getAllPointsOfSale[];
 }

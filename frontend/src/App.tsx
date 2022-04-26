@@ -9,6 +9,7 @@ import { CssBaseline } from '@mui/material';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PointsOfSaleList from './components/PointsOfSaleList';
+import BikesList from './components/BikesList';
 
 function checkIfPointOfSaleIsExpired() {
   const storedPointOfSaleTimestamp = localStorage.getItem('stored-point-of-sale-expire');
@@ -39,6 +40,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<PointsOfSaleList />} />
+        <Route path="/bikes" element={<BikesList />} />
       </Routes>
       <Footer />
     </React.Fragment>

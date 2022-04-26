@@ -23,7 +23,7 @@ function Header() {
                         )
                     }
                     <Button color="inherit" component={Link} to='/'>Accueil</Button>
-                    <Button color="inherit">Liste de vélos</Button>
+                    <Button color="inherit" component={Link} to='/bikes'>Liste de vélos</Button>
                     <Button color="inherit">Démarrer une location</Button>
                     <Button color="inherit">Terminer une location</Button>
                 </Box>
