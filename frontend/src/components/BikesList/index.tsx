@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 
 // Mui
-import { Container, Stack, Divider, FormControl, InputLabel, Select, MenuItem, Button, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Typography, Paper } from '@mui/material';
+import { Container, Stack, Divider, FormControl, InputLabel, Select, MenuItem, Box, Button, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Typography, Paper } from '@mui/material';
 
 // Queries
 import { getAllKindsOfBike, getAllKindsOfBike_getAllKindsOfBike } from '../../apollo/queries/__generated__/getAllKindsOfBike';
@@ -17,7 +17,7 @@ function BikesList() {
     // Je récupère les données de ma query
     const { data: bikesData } = useQuery<getAllBikes>(GET_ALL_BIKES, {
         variables: {
-            take: 5
+            take: 50
         }
     });
     const { data: kindsOfBikeData } = useQuery<getAllKindsOfBike>(GET_ALL_KINDS_OF_BIKE);
@@ -132,7 +132,7 @@ function BikesList() {
                         <TableCell align="right">Prix (USD)</TableCell>
                         <TableCell align="right">Statut</TableCell>
                         <TableCell align="right">Point de vente</TableCell>
-                        <TableCell align="right">Actions de vente</TableCell>
+                        <TableCell align="right">Actions</TableCell>
                     </TableRow>
                     </TableHead>
                     <TableBody>
@@ -150,7 +150,19 @@ function BikesList() {
                                     <TableCell align="right"></TableCell>
                                     <TableCell align="right">{bike.status}</TableCell>
                                     <TableCell align="right">{bike.pointOfSale.label}</TableCell>
-                                    <TableCell align="right"></TableCell>
+                                    <TableCell align="right">
+                                        <Box sx={{
+                                            display: 'flex',
+                                            justifyContent: 'flex-end'
+                                        }}>
+                                            <Button color="primary" variant="contained" sx={{ mr: 2 }}>Détails</Button>
+                                            {
+                                                bike.status === 'AVAILABLE' && (
+                                                    <Button color="success" variant="contained">Louer</Button>
+                                                )
+                                            }
+                                        </Box>
+                                    </TableCell>
                                 </TableRow>
                             ))
                         }
