@@ -1,5 +1,5 @@
 "Données reçues pour un point de vente"
-type pointOfSale {
+type PointOfSale {
     id: Int!
     label: String!
 }

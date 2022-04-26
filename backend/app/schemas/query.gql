@@ -7,6 +7,9 @@ Récupérer les données
 type Query {
 
     "Liste des catégories"
-    getAllPointsOfSale: [pointOfSale!]!
+    getAllPointsOfSale: [PointOfSale!]!
+
+    "Liste des vélos"
+    getAllBikes: [Bike!]!
 
 }

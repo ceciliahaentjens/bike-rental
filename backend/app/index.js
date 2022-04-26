@@ -9,6 +9,8 @@ const db = require('./db/pg');
 
 // DataSources
 const PointOfSale = require('./datasources/pointOfSale');
+const KindOfBike = require('./datasources/kindOfBike');
+const Bike = require('./datasources/bike');
 
 const knexConfig = {
     client: 'pg',
@@ -20,6 +22,8 @@ module.exports = {
     resolvers,
     dataSources: () => ({
         pointOfSale: new PointOfSale(knexConfig),
+        kindOfBike: new KindOfBike(knexConfig),
+        bike: new Bike(knexConfig),
     }),
     validationRules: [depthLimit(5)],
 };

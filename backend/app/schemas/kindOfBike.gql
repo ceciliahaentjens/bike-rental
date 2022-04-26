@@ -1,0 +1,6 @@
+"Un type de vélo"
+type KindOfBike {
+    id: Int!
+    label: String!
+    price: String!
+}

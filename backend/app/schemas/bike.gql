@@ -1,0 +1,7 @@
+"Un vélo sélectionné"
+type Bike {
+    id: Int!
+    number: String!
+    status: String!
+    kind: KindOfBike
+}
