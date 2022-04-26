@@ -295,6 +295,30 @@
             "deprecationReason": null
           },
           {
+            "name": "getAllKindsOfBike",
+            "description": "Liste des types de vélos",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "KindOfBike",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "getAllBikes",
             "description": "Liste des vélos",
             "args": [],
