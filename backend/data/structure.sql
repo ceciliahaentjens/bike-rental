@@ -41,7 +41,7 @@ CREATE TABLE "rent" (
     "back_date" TIMESTAMPTZ,
     "bike_id" INT NOT NULL REFERENCES "bike" ("id") ON DELETE CASCADE,
     "rent_point_of_sale_id" INT NOT NULL REFERENCES "point_of_sale" ("id") ON DELETE CASCADE,
-    "return_point_of_sale_id" INT NOT NULL REFERENCES "point_of_sale" ("id") ON DELETE CASCADE,
+    "return_point_of_sale_id" INT REFERENCES "point_of_sale" ("id") ON DELETE CASCADE,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
     "updated_at" TIMESTAMPTZ
 );

@@ -9,7 +9,6 @@ import { GetAllPointsOfSale_getAllPointsOfSale, GetAllPointsOfSale } from '../..
 import { GET_ALL_POINTS_OF_SALE } from '../../apollo/queries/allPointsOfSale';
 
 function PointsOfSaleList() {
-    console.log(localStorage.getItem('stored-point-of-sale'));
     // Je récupère les données de ma query
     const { data: pointsOfSaleData } = useQuery<GetAllPointsOfSale>(GET_ALL_POINTS_OF_SALE);
 
@@ -22,9 +21,7 @@ function PointsOfSaleList() {
     });
 
     // Je mets à jour le point de vente sélectionné par l'utilisateur
-    const [selectedPointOfSale, setSelectedPointOfSale] = useState(storedPointOfSale !== null ? storedPointOfSale : 1);
-
-    console.log(storedPointOfSale);
+    const [selectedPointOfSale, setSelectedPointOfSale] = useState(storedPointOfSale !== null ? storedPointOfSale.id : 1);
 
     // Si le point de vente enregistré par l'utilisateur change, je change le localStorage
     useEffect(() => {
@@ -45,7 +42,7 @@ function PointsOfSaleList() {
                     {
                         storedPointOfSale === null
                             ? <Typography variant="body1" sx={{mb:2}}>Veuillez renseigner votre point de vente&nbsp;:</Typography>
-                            : <Typography variant="body1" sx={{mb:2}}>Votre connexion actuelle est liée au point de vente suivant&nbsp;:</Typography>
+                            : <Typography variant="body1" sx={{mb:2}}>Votre connexion actuelle est liée au point de vente suivant&nbsp;: {storedPointOfSale.label}</Typography>
                     }
                     <FormControl fullWidth>
                         <InputLabel id="point-of-sale-select-label">Point de vente</InputLabel>
@@ -73,7 +70,13 @@ function PointsOfSaleList() {
                             alignSelf: 'center'
                         }}
                         onClick={() => {
-                            setStoredPointOfSale(JSON.stringify(selectedPointOfSale))
+                            // Je récupère l'objet du point de vente sauvegardé
+                            const newPointOfSale = pointsOfSaleData?.getAllPointsOfSale.find(element => element.id === selectedPointOfSale);
+                            // J'ajoute le timestamp pour l'expiration
+                            localStorage.setItem('stored-point-of-sale-expire', JSON.stringify(Date.now()));
+        
+                            // Je mets à jour mon localStorage
+                            setStoredPointOfSale(newPointOfSale)
                         }}
                     >
                         {
