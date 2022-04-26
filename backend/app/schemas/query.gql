@@ -6,7 +6,7 @@ Récupérer les données
 """
 type Query {
 
-    "Liste des catégories"
+    "Liste des points de vente"
     getAllPointsOfSale: [PointOfSale!]!
 
     "Liste des vélos"

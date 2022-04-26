@@ -3,5 +3,5 @@ type Bike {
     id: Int!
     number: String!
     status: String!
-    kind: KindOfBike
+    kind: KindOfBike!
 }
