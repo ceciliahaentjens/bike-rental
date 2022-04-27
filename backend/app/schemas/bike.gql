@@ -4,6 +4,6 @@ type Bike {
     number: String!
     status: String!
     kind: KindOfBike!
-    pointOfSale: PointOfSale!
+    point_of_sale: PointOfSale!
     rents: [Rent!]
 }

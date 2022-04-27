@@ -3,7 +3,7 @@ module.exports = {
         return dataSources.kindOfBike.findByPk(parent.kind_of_bike_id);
     },
 
-    pointOfSale(parent, _, { dataSources }) {
+    point_of_sale(parent, _, { dataSources }) {
         return dataSources.pointOfSale.findByPk(parent.point_of_sale_id);
     },
 
