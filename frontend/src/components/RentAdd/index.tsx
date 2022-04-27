@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
-import { useParams } from 'react-router';
+import { useLazyQuery, useQuery, useMutation } from '@apollo/client';
+import { useNavigate, useParams } from 'react-router';
 import { Nullable } from '../../types';
 
 
 // Mui
-import { Autocomplete, Box, Button, Container, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
+import { Alert, Autocomplete, Box, Button, Container, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -16,6 +16,10 @@ import { GET_ALL_POINTS_OF_SALE } from '../../apollo/queries/allPointsOfSale';
 import { SearchBike, SearchBikeVariables, SearchBike_searchBike } from '../../apollo/queries/__generated__/SearchBike';
 import { SEARCH_BIKE } from '../../apollo/queries/searchBike';
 
+// Mutations
+import { addRent, addRentVariables } from '../../apollo/mutations/__generated__/addRent';
+import { ADD_RENT } from '../../apollo/mutations/addRent';
+
 // Helpers
 import { getTomorrow } from '../../helpers/moment'
 
@@ -24,10 +28,12 @@ type RentProps = {
 }
 
 function RentAdd({ bikeId }: RentProps) {
+    const navigate = useNavigate();
+
     // State variables
-    const [clientLastname, setClientLastname] = useState<String>('');
-    const [clientFirstname, setClientFirstname] = useState<String>('');
-    const [selectedPointOfSale, setSelectedPointOfSale] = useState(1);
+    const [clientLastname, setClientLastname] = useState<string>('');
+    const [clientFirstname, setClientFirstname] = useState<string>('');
+    const [selectedPointOfSale, setSelectedPointOfSale] = useState<number |undefined>(1);
     const [selectedReturnDate, setSelectedReturnDate] = useState<Date | null>(() => getTomorrow());
     // Update the return date
     const changeReturnDate = (newValue: any) => {
@@ -37,7 +43,7 @@ function RentAdd({ bikeId }: RentProps) {
     // Je récupère mes points de vente
     const { data: pointsOfSaleData } = useQuery<GetAllPointsOfSale>(GET_ALL_POINTS_OF_SALE);
 
-    // Gestion du vélo
+    // Gestion de la recherche du vélo
     const [searchPredicate, setSearchPredicate] = useState<string>('');
     const [selectedBike, setSelectedBike] = useState<Nullable<SearchBike_searchBike>>(null);
 
@@ -46,7 +52,6 @@ function RentAdd({ bikeId }: RentProps) {
             searchTerm: searchPredicate
         }
     });
-
     // On lance la recherche au fur et à mesure
     useEffect(() => {
         if (searchPredicate !== '') {
@@ -54,12 +59,50 @@ function RentAdd({ bikeId }: RentProps) {
         }
     }, [searchBikes, searchPredicate]);
 
+    // Gestion de l'ajout d'une nouvelle location
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [addRent, { error }] = useMutation<addRent, addRentVariables>(ADD_RENT, {
+        onError: (error) => {
+            console.log(error)
+        },
+        onCompleted: (data) => {
+            navigate(`/bikes/${data.createRent?.bike.id}`);
+        }
+    })
+
+    async function handleSubmit(event: React.SyntheticEvent) {
+        event.preventDefault();
+
+        console.log(clientLastname);
+        console.log(clientFirstname);
+        console.log(selectedBike);
+        console.log(selectedPointOfSale);
+        console.log(selectedReturnDate);
+
+        if (selectedPointOfSale && selectedBike) {
+            addRent({
+                variables: {
+                    input: {
+                        client_firstname: clientFirstname,
+                        client_lastname: clientLastname,
+                        bike_id: selectedBike.id,
+                        rent_point_of_sale_id: selectedPointOfSale,
+                        back_date_planned: selectedReturnDate
+                    }
+                }
+            })
+        }
+
+    }
+
     return (
         <Container>
             <Typography variant="h2" sx={{ mb: 6, textAlign: 'center' }}>Démarrer une location</Typography>
             <Box
-
+                component="form"
+                onSubmit={handleSubmit}
             >
+                {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                 <Stack direction="row" justifyContent="flex-start" spacing={6}>
                     <TextField
                         required
@@ -92,6 +135,7 @@ function RentAdd({ bikeId }: RentProps) {
                         value={selectedBike}
                         onChange={(event, value) => {
                             setSelectedBike(value);
+                            setSelectedPointOfSale(value?.point_of_sale.id);
                         }}
                         getOptionLabel={(option) => option.number}
                         renderOption={(props, option, state) => {
