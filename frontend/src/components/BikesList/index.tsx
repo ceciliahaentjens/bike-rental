@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
 // Helpers
-import { AVAILABLE_STATUS, getReadableStatus } from '../../helpers/status';
+import { AVAILABLE_STATUS, getReadableStatus, isAvailable, isRented } from '../../helpers/status';
 
 // Mui
 import { Container, Stack, Divider, FormControl, InputLabel, Select, MenuItem, Box, Button, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Typography, Paper } from '@mui/material';
@@ -163,8 +163,13 @@ function BikesList() {
                                         }}>
                                             <Button color="primary" variant="contained" sx={{ mr: 2 }} component={Link} to={`/bikes/${bike.id}`}>Détails</Button>
                                             {
-                                                bike.status === 'AVAILABLE' && (
+                                                isAvailable(bike.status) && (
                                                     <Button color="success" variant="contained">Louer</Button>
+                                                )
+                                            }
+                                            {
+                                                isRented(bike.status) && (
+                                                    <Button color="warning" variant="contained">Terliner une location</Button>
                                                 )
                                             }
                                         </Box>

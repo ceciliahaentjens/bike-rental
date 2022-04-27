@@ -19,8 +19,13 @@ function isAvailable(status) {
     return status === 'AVAILABLE';
 }
 
+function isRented(status) {
+    return status === 'RENT';
+}
+
 module.exports = {
     AVAILABLE_STATUS,
     getReadableStatus,
-    isAvailable
+    isAvailable,
+    isRented
 }
