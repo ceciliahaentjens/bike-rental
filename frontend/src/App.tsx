@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import PointsOfSaleList from './components/PointsOfSaleList';
 import BikesList from './components/BikesList';
 import BikeDetails from './components/BikeDetails';
+import RentAdd from './components/RentAdd';
 
 function checkIfPointOfSaleIsExpired() {
   const storedPointOfSaleTimestamp = localStorage.getItem('stored-point-of-sale-expire');
@@ -43,6 +44,7 @@ function App() {
         <Route path="/" element={<PointsOfSaleList />} />
         <Route path="/bikes" element={<BikesList />} />
         <Route path="/bikes/:id" element={<BikeDetails />} />
+        <Route path="/rents/new" element={<RentAdd />} />
       </Routes>
       <Footer />
     </React.Fragment>

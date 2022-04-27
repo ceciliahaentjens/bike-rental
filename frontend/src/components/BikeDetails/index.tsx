@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
 // Helpers
-import { getReadableStatus, isAvailable } from '../../helpers/status';
+import { getReadableStatus, isAvailable, isRented } from '../../helpers/status';
 
 // Mui
 import { Button, Stack, Chip, Container, Paper, Typography, Table, TableContainer, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
@@ -36,6 +37,18 @@ function BikeDetails() {
             <Stack direction="row" sx={{ alignItems: 'center' }} spacing={1}>
                 <Typography variant="body1">Statut&nbsp;:</Typography>
                 <Chip label={getReadableStatus(bike?.status)} color={isAvailable(bike?.status) ? 'success' : 'warning'}/>
+                {
+                    isAvailable(bike?.status) && (
+                        <Button color="primary" variant="contained" component={Link} to={{
+                            pathname: `/rents/new/${bike?.id}`
+                        }}>Démarrer une location</Button>
+                    )
+                }
+                {
+                    isRented(bike?.status) && (
+                        <Button color="primary" variant="contained">Terminer une location</Button>
+                    )
+                }
             </Stack>            
             {
                 bike?.rents && bike?.rents.length > 0 && (
