@@ -13,8 +13,10 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 // Queries
 import { GetAllPointsOfSale_getAllPointsOfSale, GetAllPointsOfSale } from '../../apollo/queries/__generated__/GetAllPointsOfSale';
 import { GET_ALL_POINTS_OF_SALE } from '../../apollo/queries/allPointsOfSale';
-import { SearchBike, SearchBikeVariables, SearchBike_searchBike } from '../../apollo/queries/__generated__/SearchBike';
+import { SearchBike, SearchBike_searchBike } from '../../apollo/queries/__generated__/SearchBike';
 import { SEARCH_BIKE } from '../../apollo/queries/searchBike';
+import { GET_BIKE_DETAILS } from '../../apollo/queries/bikeDetails';
+import { GetBikeDetails } from '../../apollo/queries/__generated__/GetBikeDetails';
 
 // Mutations
 import { addRent, addRentVariables } from '../../apollo/mutations/__generated__/addRent';
@@ -23,12 +25,12 @@ import { ADD_RENT } from '../../apollo/mutations/addRent';
 // Helpers
 import { getTomorrow } from '../../helpers/moment'
 
-type RentProps = {
-    bikeId?: Number
-}
-
-function RentAdd({ bikeId }: RentProps) {
+function RentAdd() {
     const navigate = useNavigate();
+
+    // Je récupère l'id passé en param si il existe
+    const { id } = useParams();
+    const bikeId = Number(id);
 
     // State variables
     const [clientLastname, setClientLastname] = useState<string>('');
@@ -43,10 +45,27 @@ function RentAdd({ bikeId }: RentProps) {
     // Je récupère mes points de vente
     const { data: pointsOfSaleData } = useQuery<GetAllPointsOfSale>(GET_ALL_POINTS_OF_SALE);
 
-    // Gestion de la recherche du vélo
+    // Gestion du vélo
     const [searchPredicate, setSearchPredicate] = useState<string>('');
     const [selectedBike, setSelectedBike] = useState<Nullable<SearchBike_searchBike>>(null);
 
+    // On execute la suite si on possède le paramètre bikeId
+    const [getBike, { data: bikeData }] = useLazyQuery<GetBikeDetails>(GET_BIKE_DETAILS, {
+        variables: {
+            getBikeId: bikeId
+        }
+    });
+    useEffect(() => {
+        if (bikeId) {
+            getBike();
+            if (bikeData && bikeData?.getBike !== null) {
+                const myBike = bikeData?.getBike;
+                setSelectedBike(myBike);
+            }
+        }
+    }, [bikeId, bikeData, getBike]);
+
+    // Gestion de la recherche de vélos
     const [searchBikes, { data: searchData }] = useLazyQuery<SearchBike>(SEARCH_BIKE, {
         variables: {
             searchTerm: searchPredicate
@@ -72,12 +91,6 @@ function RentAdd({ bikeId }: RentProps) {
 
     async function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault();
-
-        console.log(clientLastname);
-        console.log(clientFirstname);
-        console.log(selectedBike);
-        console.log(selectedPointOfSale);
-        console.log(selectedReturnDate);
 
         if (selectedPointOfSale && selectedBike) {
             addRent({

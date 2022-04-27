@@ -44,6 +44,7 @@ function App() {
         <Route path="/" element={<PointsOfSaleList />} />
         <Route path="/bikes" element={<BikesList />} />
         <Route path="/bikes/:id" element={<BikeDetails />} />
+        <Route path="/rents/new/:id" element={<RentAdd />} />
         <Route path="/rents/new" element={<RentAdd />} />
       </Routes>
       <Footer />
