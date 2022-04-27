@@ -11,19 +11,19 @@ export const GET_BIKE_DETAILS = gql`
                 label
                 price
             }
-            pointOfSale {
+            point_of_sale {
                 id
                 label
             }
             rents {
                 id
-                startDate
-                returnDate
-                rentPointOfSale {
+                start_date
+                back_date
+                rent_point_of_sale {
                     id
                     label
                 }
-                returnPointOfSale {
+                return_point_of_sale {
                     id
                     label
                 }

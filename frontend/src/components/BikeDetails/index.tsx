@@ -29,8 +29,8 @@ function BikeDetails() {
         <Container>
             <Typography variant="h2" sx={{ mb: 6, textAlign: 'center' }}>Vélo {bike?.number}</Typography>
             {
-                bike?.pointOfSale && (
-                    <Typography variant="body1" sx={{ mb: 2 }}>Dernier point de vente&nbsp;: {bike?.pointOfSale.label}</Typography>
+                bike?.point_of_sale && (
+                    <Typography variant="body1" sx={{ mb: 2 }}>Dernier point de vente&nbsp;: {bike?.point_of_sale.label}</Typography>
                 )
             }
             <Stack direction="row" sx={{ alignItems: 'center' }} spacing={1}>
@@ -56,10 +56,10 @@ function BikeDetails() {
                                             key={rent.id}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                         >
-                                            <TableCell>{rent.rentPointOfSale.label}</TableCell>
-                                            <TableCell>{rent.startDate}</TableCell>
-                                            <TableCell>{rent.returnPointOfSale ? rent.returnPointOfSale.label : ''}</TableCell>
-                                            <TableCell>{rent.returnDate ?? ''}</TableCell>
+                                            <TableCell>{rent.rent_point_of_sale.label}</TableCell>
+                                            <TableCell>{rent.start_date}</TableCell>
+                                            <TableCell>{rent.return_point_of_sale ? rent.return_point_of_sale.label : ''}</TableCell>
+                                            <TableCell>{rent.back_date ?? ''}</TableCell>
                                         </TableRow>
                                     ))
                                 }

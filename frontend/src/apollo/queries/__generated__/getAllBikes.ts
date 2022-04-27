@@ -14,7 +14,7 @@ export interface getAllBikes_getAllBikes_kind {
   price: string;
 }
 
-export interface getAllBikes_getAllBikes_pointOfSale {
+export interface getAllBikes_getAllBikes_point_of_sale {
   __typename: "PointOfSale";
   id: number;
   label: string;
@@ -26,7 +26,7 @@ export interface getAllBikes_getAllBikes {
   number: string;
   status: string;
   kind: getAllBikes_getAllBikes_kind;
-  pointOfSale: getAllBikes_getAllBikes_pointOfSale;
+  point_of_sale: getAllBikes_getAllBikes_point_of_sale;
 }
 
 export interface getAllBikes {

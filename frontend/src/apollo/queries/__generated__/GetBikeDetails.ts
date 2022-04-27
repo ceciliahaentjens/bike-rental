@@ -14,19 +14,19 @@ export interface GetBikeDetails_getBike_kind {
   price: string;
 }
 
-export interface GetBikeDetails_getBike_pointOfSale {
+export interface GetBikeDetails_getBike_point_of_sale {
   __typename: "PointOfSale";
   id: number;
   label: string;
 }
 
-export interface GetBikeDetails_getBike_rents_rentPointOfSale {
+export interface GetBikeDetails_getBike_rents_rent_point_of_sale {
   __typename: "PointOfSale";
   id: number;
   label: string;
 }
 
-export interface GetBikeDetails_getBike_rents_returnPointOfSale {
+export interface GetBikeDetails_getBike_rents_return_point_of_sale {
   __typename: "PointOfSale";
   id: number;
   label: string;
@@ -35,10 +35,10 @@ export interface GetBikeDetails_getBike_rents_returnPointOfSale {
 export interface GetBikeDetails_getBike_rents {
   __typename: "Rent";
   id: number;
-  startDate: any;
-  returnDate: any | null;
-  rentPointOfSale: GetBikeDetails_getBike_rents_rentPointOfSale;
-  returnPointOfSale: GetBikeDetails_getBike_rents_returnPointOfSale | null;
+  start_date: any;
+  back_date: any | null;
+  rent_point_of_sale: GetBikeDetails_getBike_rents_rent_point_of_sale;
+  return_point_of_sale: GetBikeDetails_getBike_rents_return_point_of_sale | null;
 }
 
 export interface GetBikeDetails_getBike {
@@ -47,7 +47,7 @@ export interface GetBikeDetails_getBike {
   number: string;
   status: string;
   kind: GetBikeDetails_getBike_kind;
-  pointOfSale: GetBikeDetails_getBike_pointOfSale;
+  point_of_sale: GetBikeDetails_getBike_point_of_sale;
   rents: GetBikeDetails_getBike_rents[] | null;
 }
 

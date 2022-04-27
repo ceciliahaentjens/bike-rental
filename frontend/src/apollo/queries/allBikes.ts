@@ -11,7 +11,7 @@ export const GET_ALL_BIKES = gql`
                 label
                 price
             }
-            pointOfSale {
+            point_of_sale {
                 id
                 label
             }

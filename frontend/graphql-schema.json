@@ -147,7 +147,7 @@
             "deprecationReason": null
           },
           {
-            "name": "clientFirstname",
+            "name": "client_firstname",
             "description": null,
             "args": [],
             "type": {
@@ -159,7 +159,7 @@
             "deprecationReason": null
           },
           {
-            "name": "clientLastname",
+            "name": "client_lastname",
             "description": null,
             "args": [],
             "type": {
@@ -171,7 +171,7 @@
             "deprecationReason": null
           },
           {
-            "name": "startDate",
+            "name": "start_date",
             "description": null,
             "args": [],
             "type": {
@@ -187,7 +187,7 @@
             "deprecationReason": null
           },
           {
-            "name": "returnDatePlanned",
+            "name": "back_date_planned",
             "description": null,
             "args": [],
             "type": {
@@ -203,7 +203,7 @@
             "deprecationReason": null
           },
           {
-            "name": "returnDate",
+            "name": "back_date",
             "description": null,
             "args": [],
             "type": {
@@ -231,7 +231,7 @@
             "deprecationReason": null
           },
           {
-            "name": "rentPointOfSale",
+            "name": "rent_point_of_sale",
             "description": null,
             "args": [],
             "type": {
@@ -247,7 +247,7 @@
             "deprecationReason": null
           },
           {
-            "name": "returnPointOfSale",
+            "name": "return_point_of_sale",
             "description": null,
             "args": [],
             "type": {
@@ -261,6 +261,87 @@
         ],
         "inputFields": null,
         "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "RentInput",
+        "description": "L'ajout d'une location",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "client_firstname",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "client_lastname",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "bike_id",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "rent_point_of_sale_id",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "back_date_planned",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -393,7 +474,7 @@
             "deprecationReason": null
           },
           {
-            "name": "pointOfSale",
+            "name": "point_of_sale",
             "description": null,
             "args": [],
             "type": {
@@ -634,6 +715,29 @@
             "type": {
               "kind": "OBJECT",
               "name": "Hello",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "createRent",
+            "description": "Création d'une location",
+            "args": [
+              {
+                "name": "input",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "RentInput",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Rent",
               "ofType": null
             },
             "isDeprecated": false,

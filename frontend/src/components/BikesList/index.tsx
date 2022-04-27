@@ -20,11 +20,7 @@ import { GET_ALL_POINTS_OF_SALE } from '../../apollo/queries/allPointsOfSale';
 function BikesList() {
 
     // Je récupère les données de ma query
-    const { data: bikesData } = useQuery<getAllBikes>(GET_ALL_BIKES, {
-        variables: {
-            take: 50
-        }
-    });
+    const { data: bikesData } = useQuery<getAllBikes>(GET_ALL_BIKES);
     const { data: kindsOfBikeData } = useQuery<getAllKindsOfBike>(GET_ALL_KINDS_OF_BIKE);
     const { data: pointsOfSaleData } = useQuery<GetAllPointsOfSale>(GET_ALL_POINTS_OF_SALE);
 
@@ -50,7 +46,7 @@ function BikesList() {
         }
         if (pointOfSale) {
             filtered = filtered?.filter((bike) => 
-                bike.pointOfSale.id === Number(pointOfSale)
+                bike.point_of_sale.id === Number(pointOfSale)
             );
         }       
         setBikesToDisplay(filtered);
@@ -155,7 +151,7 @@ function BikesList() {
                                     <TableCell align="right">{bike.kind.price}</TableCell>
                                     <TableCell align="right"></TableCell>
                                     <TableCell align="right">{bike.status}</TableCell>
-                                    <TableCell align="right">{bike.pointOfSale.label}</TableCell>
+                                    <TableCell align="right">{bike.point_of_sale.label}</TableCell>
                                     <TableCell align="right">
                                         <Box sx={{
                                             display: 'flex',
@@ -169,7 +165,7 @@ function BikesList() {
                                             }
                                             {
                                                 isRented(bike.status) && (
-                                                    <Button color="warning" variant="contained">Terliner une location</Button>
+                                                    <Button color="warning" variant="contained">Terminer une location</Button>
                                                 )
                                             }
                                         </Box>
