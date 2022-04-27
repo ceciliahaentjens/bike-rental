@@ -13,7 +13,7 @@ type Query {
     getAllKindsOfBike(skip: Int, take: Int): [KindOfBike!]!
 
     "Liste des vélos"
-    getAllBikes(skip: Int, take: Int): [Bike!]!
+    getAllBikes(skip: Int, take: Int, kind_of_bike_id: Int, status: String, point_of_sale_id: Int): [Bike!]!
 
     "Récupérer un vélo"
     getBike(id: Int!): Bike

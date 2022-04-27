@@ -39,4 +39,7 @@ export interface getAllBikes {
 export interface getAllBikesVariables {
   skip?: number | null;
   take?: number | null;
+  status?: string | null;
+  pointOfSaleId?: number | null;
+  kindOfBikeId?: number | null;
 }

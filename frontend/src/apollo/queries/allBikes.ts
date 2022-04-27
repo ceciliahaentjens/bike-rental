@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_ALL_BIKES = gql`
-    query getAllBikes($skip: Int, $take: Int) {
-        getAllBikes(skip: $skip, take: $take) {
+    query getAllBikes($skip: Int, $take: Int, $status: String, $pointOfSaleId: Int, $kindOfBikeId: Int) {
+        getAllBikes(skip: $skip, take: $take, status: $status, point_of_sale_id: $pointOfSaleId, kind_of_bike_id: $kindOfBikeId) {
             id
             number
             status

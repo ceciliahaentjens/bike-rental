@@ -29,11 +29,8 @@ function BikeDetails() {
     return (
         <Container>
             <Typography variant="h2" sx={{ mb: 6, textAlign: 'center' }}>Vélo {bike?.number}</Typography>
-            {
-                bike?.point_of_sale && (
-                    <Typography variant="body1" sx={{ mb: 2 }}>Dernier point de vente&nbsp;: {bike?.point_of_sale.label}</Typography>
-                )
-            }
+            <Typography variant="body1" sx={{ mb: 2 }}>Type&nbsp;: {bike?.kind.label}</Typography>
+            <Typography variant="body1" sx={{ mb: 2 }}>Dernier point de vente&nbsp;: {bike?.point_of_sale.label}</Typography>
             <Stack direction="row" sx={{ alignItems: 'center' }} spacing={1}>
                 <Typography variant="body1">Statut&nbsp;:</Typography>
                 <Chip label={getReadableStatus(bike?.status)} color={isAvailable(bike?.status) ? 'success' : 'warning'}/>
@@ -52,7 +49,7 @@ function BikeDetails() {
             </Stack>            
             {
                 bike?.rents && bike?.rents.length > 0 && (
-                    <TableContainer component={Paper}>
+                    <TableContainer component={Paper} sx={{ mt: 6 }}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
                                 <TableRow>

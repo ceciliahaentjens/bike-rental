@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 
 // Helpers
 import { AVAILABLE_STATUS, getReadableStatus, isAvailable, isRented } from '../../helpers/status';
@@ -12,45 +12,29 @@ import { Container, Stack, Divider, FormControl, InputLabel, Select, MenuItem, B
 // Queries
 import { getAllKindsOfBike, getAllKindsOfBike_getAllKindsOfBike } from '../../apollo/queries/__generated__/getAllKindsOfBike';
 import { GET_ALL_KINDS_OF_BIKE } from '../../apollo/queries/allKindsOfBike';
-import { getAllBikes, getAllBikes_getAllBikes } from '../../apollo/queries/__generated__/getAllBikes';
+import { getAllBikes, getAllBikesVariables, getAllBikes_getAllBikes } from '../../apollo/queries/__generated__/getAllBikes';
 import { GET_ALL_BIKES } from '../../apollo/queries/allBikes';
 import { GetAllPointsOfSale_getAllPointsOfSale, GetAllPointsOfSale } from '../../apollo/queries/__generated__/GetAllPointsOfSale';
 import { GET_ALL_POINTS_OF_SALE } from '../../apollo/queries/allPointsOfSale';
 
 function BikesList() {
-
-    // Je récupère les données de ma query
-    const { data: bikesData } = useQuery<getAllBikes>(GET_ALL_BIKES);
-    const { data: kindsOfBikeData } = useQuery<getAllKindsOfBike>(GET_ALL_KINDS_OF_BIKE);
-    const { data: pointsOfSaleData } = useQuery<GetAllPointsOfSale>(GET_ALL_POINTS_OF_SALE);
-
     const [type, setType] = useState('');
     const [status, setStatus] = useState('');
     const [pointOfSale, setPointOfSale] = useState('');
-    const [bikesToDisplay, setBikesToDisplay] = useState(() => {
-        return bikesData ? bikesData.getAllBikes : [];
-    });
+    const [searchFilter, setSearchFilter] = useState<getAllBikesVariables>({ take: 20 });
 
-    function filterBikesList(type: String, status: String, pointOfSale: String) {
-        let filtered = bikesData ? bikesData.getAllBikes : [];
+    // Je récupère les données de mes queries
+    const { data: kindsOfBikeData } = useQuery<getAllKindsOfBike>(GET_ALL_KINDS_OF_BIKE);
+    const { data: pointsOfSaleData } = useQuery<GetAllPointsOfSale>(GET_ALL_POINTS_OF_SALE);
+    const [getBikesToDisplay, { data: bikesData }] = useLazyQuery<getAllBikes>(GET_ALL_BIKES);
 
-        if (type) {
-            filtered = filtered?.filter((bike) => 
-                bike.kind.id === Number(type)
-            );
-        }
-        if (status) {
-            filtered = filtered?.filter((bike) => 
-                (bike.status).toUpperCase() === status.toUpperCase()
-            );
-        }
-        if (pointOfSale) {
-            filtered = filtered?.filter((bike) => 
-                bike.point_of_sale.id === Number(pointOfSale)
-            );
-        }       
-        setBikesToDisplay(filtered);
-    }
+    // On relance la requête à chaque fois que la recherche change
+    useEffect(() => {
+        getBikesToDisplay({
+            variables: searchFilter
+        });
+    }, [searchFilter, getBikesToDisplay, bikesData?.getAllBikes]);
+
 
     return (
         <Container>
@@ -65,7 +49,12 @@ function BikesList() {
                 component="form"
                 onSubmit={(event: React.SyntheticEvent) => {
                     event.preventDefault();
-                    filterBikesList(type, status, pointOfSale);
+
+                    setSearchFilter({ ...searchFilter,
+                        status: status !== '' ? status : undefined,
+                        kindOfBikeId: type !== '' ? Number(type) : undefined,
+                        pointOfSaleId: pointOfSale !== '' ? Number(pointOfSale) : undefined
+                    });
                 }}
             >
                 <FormControl sx={{ m: 1, minWidth: 180 }} size="small">
@@ -139,7 +128,7 @@ function BikesList() {
                     </TableHead>
                     <TableBody>
                         {
-                            bikesData && bikesToDisplay.map((bike: getAllBikes_getAllBikes) => (
+                            bikesData && bikesData?.getAllBikes.map((bike: getAllBikes_getAllBikes) => (
                                 <TableRow
                                     key={bike.id}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
