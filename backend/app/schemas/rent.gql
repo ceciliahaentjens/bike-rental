@@ -1,12 +1,21 @@
 "Une location sélectionnée"
 type Rent {
     id: Int!
-    clientFirstname: String
-    clientLastname: String
-    startDate: DateTime!
-    returnDatePlanned: DateTime!
-    returnDate: DateTime
+    client_firstname: String
+    client_lastname: String
+    start_date: DateTime!
+    back_date_planned: DateTime!
+    back_date: DateTime
     bike: Bike!
-    rentPointOfSale: PointOfSale!
-    returnPointOfSale: PointOfSale
+    rent_point_of_sale: PointOfSale!
+    return_point_of_sale: PointOfSale
+}
+
+"L'ajout d'une location"
+input RentInput {
+    client_firstname: String!
+    client_lastname: String!
+    bike_id: Int!
+    rent_point_of_sale_id: Int!
+    back_date_planned: DateTime!
 }

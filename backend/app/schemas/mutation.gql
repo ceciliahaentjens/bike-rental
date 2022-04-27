@@ -1,4 +1,7 @@
 "Ajouter/modifier/supprimer des données"
 type Mutation {
     exampleHello(input: HelloInput!): Hello
+
+    "Création d'une location"
+    createRent(input: RentInput): Rent
 }
