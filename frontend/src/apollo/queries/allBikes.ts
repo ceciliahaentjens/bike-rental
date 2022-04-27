@@ -10,6 +10,7 @@ export const GET_ALL_BIKES = gql`
                 id
                 label
                 price
+                USDPrice
             }
             point_of_sale {
                 id

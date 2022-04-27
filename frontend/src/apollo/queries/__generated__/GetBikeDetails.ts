@@ -11,7 +11,7 @@ export interface GetBikeDetails_getBike_kind {
   __typename: "KindOfBike";
   id: number;
   label: string;
-  price: string;
+  price: number;
 }
 
 export interface GetBikeDetails_getBike_point_of_sale {

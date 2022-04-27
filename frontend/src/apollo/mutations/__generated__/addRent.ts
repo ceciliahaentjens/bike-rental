@@ -13,7 +13,7 @@ export interface addRent_createRent_bike_kind {
   __typename: "KindOfBike";
   label: string;
   id: number;
-  price: string;
+  price: number;
 }
 
 export interface addRent_createRent_bike_point_of_sale {

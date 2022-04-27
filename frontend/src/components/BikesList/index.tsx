@@ -138,7 +138,7 @@ function BikesList() {
                                     </TableCell>
                                     <TableCell align="right">{bike.kind.label}</TableCell>
                                     <TableCell align="right">{bike.kind.price}</TableCell>
-                                    <TableCell align="right"></TableCell>
+                                    <TableCell align="right">{bike.kind.USDPrice}</TableCell>
                                     <TableCell align="right">{bike.status}</TableCell>
                                     <TableCell align="right">{bike.point_of_sale.label}</TableCell>
                                     <TableCell align="right">
