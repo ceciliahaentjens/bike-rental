@@ -6,6 +6,7 @@ const {
 
 // Types
 const Bike = require('./bike');
+const Rent = require('./rent');
 // Query and mutations
 const Query = require('./query');
 const Mutation = require('./mutation');
@@ -14,6 +15,8 @@ module.exports = {
     DateTime,
 
     Bike,
+
+    Rent,
 
     // Liste des actions de récupération possibles
     Query,
