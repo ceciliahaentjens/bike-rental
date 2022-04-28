@@ -266,7 +266,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "RentInput",
+        "name": "CreateRentInput",
         "description": "L'ajout d'une location",
         "fields": null,
         "inputFields": [
@@ -335,6 +335,59 @@
               "ofType": {
                 "kind": "SCALAR",
                 "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "StopRentInput",
+        "description": "L'arrêt d'une location",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "rent_id",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "bike_id",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "return_point_of_sale_id",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
                 "ofType": null
               }
             },
@@ -755,6 +808,20 @@
                   }
                 },
                 "defaultValue": null
+              },
+              {
+                "name": "status",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
               }
             ],
             "type": {
@@ -824,7 +891,30 @@
                 "description": null,
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "RentInput",
+                  "name": "CreateRentInput",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Rent",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "stopRent",
+            "description": "Arrêt d'une location",
+            "args": [
+              {
+                "name": "input",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "StopRentInput",
                   "ofType": null
                 },
                 "defaultValue": null

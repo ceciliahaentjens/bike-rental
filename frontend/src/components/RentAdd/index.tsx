@@ -60,7 +60,7 @@ function RentAdd() {
         onCompleted: (data) => {
             navigate(`/bikes/${data.createRent?.bike.id}`);
         }
-    })
+    });
 
     async function handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault();

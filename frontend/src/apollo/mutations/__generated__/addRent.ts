@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { RentInput } from "./../../../../__generated__/globalTypes";
+import { CreateRentInput } from "./../../../../__generated__/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: addRent
@@ -66,5 +66,5 @@ export interface addRent {
 }
 
 export interface addRentVariables {
-  input?: RentInput | null;
+  input?: CreateRentInput | null;
 }

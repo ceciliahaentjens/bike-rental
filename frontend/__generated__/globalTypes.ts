@@ -10,12 +10,21 @@
 /**
  * L'ajout d'une location
  */
-export interface RentInput {
+export interface CreateRentInput {
   client_firstname: string;
   client_lastname: string;
   bike_id: number;
   rent_point_of_sale_id: number;
   back_date_planned: any;
+}
+
+/**
+ * L'arrêt d'une location
+ */
+export interface StopRentInput {
+  rent_id: number;
+  bike_id: number;
+  return_point_of_sale_id: number;
 }
 
 //==============================================================

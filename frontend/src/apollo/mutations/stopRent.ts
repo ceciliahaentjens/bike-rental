@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-export const ADD_RENT = gql`
-    mutation addRent($input: CreateRentInput) {
-        createRent(input: $input) {
+export const STOP_RENT = gql`
+    mutation stopRent($input: StopRentInput) {
+        stopRent(input: $input) {
             bike {
                 id
                 number
