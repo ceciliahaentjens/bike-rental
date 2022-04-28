@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useLazyQuery, useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { useNavigate, useParams } from 'react-router';
 import { Nullable } from '../../types';
 
-
 // Mui
-import { Alert, Autocomplete, Box, Button, Container, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, Container, FormControl, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -13,17 +12,17 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 // Queries
 import { GetAllPointsOfSale_getAllPointsOfSale, GetAllPointsOfSale } from '../../apollo/queries/__generated__/GetAllPointsOfSale';
 import { GET_ALL_POINTS_OF_SALE } from '../../apollo/queries/allPointsOfSale';
-import { SearchBike, SearchBike_searchBike } from '../../apollo/queries/__generated__/SearchBike';
-import { SEARCH_BIKE } from '../../apollo/queries/searchBike';
-import { GET_BIKE_DETAILS } from '../../apollo/queries/bikeDetails';
-import { GetBikeDetails } from '../../apollo/queries/__generated__/GetBikeDetails';
+import { SearchBike_searchBike } from '../../apollo/queries/__generated__/SearchBike';
 
 // Mutations
 import { addRent, addRentVariables } from '../../apollo/mutations/__generated__/addRent';
 import { ADD_RENT } from '../../apollo/mutations/addRent';
 
 // Helpers
-import { getTomorrow } from '../../helpers/moment'
+import { getTomorrow } from '../../helpers/moment';
+
+// Homemade Cmp
+import BikeSearchAutocompleteCmp from '../BikeSearch';
 
 function RentAdd() {
     const navigate = useNavigate();
@@ -35,8 +34,10 @@ function RentAdd() {
     // State variables
     const [clientLastname, setClientLastname] = useState<string>('');
     const [clientFirstname, setClientFirstname] = useState<string>('');
-    const [selectedPointOfSale, setSelectedPointOfSale] = useState<number |undefined>(1);
+    const [selectedPointOfSale, setSelectedPointOfSale] = useState<number>(1);
     const [selectedReturnDate, setSelectedReturnDate] = useState<Date | null>(() => getTomorrow());
+    const [selectedBike, setSelectedBike] = useState<Nullable<SearchBike_searchBike>>(null);
+
     // Update the return date
     const changeReturnDate = (newValue: any) => {
         setSelectedReturnDate(newValue?.toDate());
@@ -45,38 +46,10 @@ function RentAdd() {
     // Je récupère mes points de vente
     const { data: pointsOfSaleData } = useQuery<GetAllPointsOfSale>(GET_ALL_POINTS_OF_SALE);
 
-    // Gestion du vélo
-    const [searchPredicate, setSearchPredicate] = useState<string>('');
-    const [selectedBike, setSelectedBike] = useState<Nullable<SearchBike_searchBike>>(null);
-
-    // On execute la suite si on possède le paramètre bikeId
-    const [getBike, { data: bikeData }] = useLazyQuery<GetBikeDetails>(GET_BIKE_DETAILS, {
-        variables: {
-            getBikeId: bikeId
-        }
-    });
+    // Si selectedBike change, je change le point de vente
     useEffect(() => {
-        if (bikeId) {
-            getBike();
-            if (bikeData && bikeData?.getBike !== null) {
-                const myBike = bikeData?.getBike;
-                setSelectedBike(myBike);
-            }
-        }
-    }, [bikeId, bikeData, getBike]);
-
-    // Gestion de la recherche de vélos
-    const [searchBikes, { data: searchData }] = useLazyQuery<SearchBike>(SEARCH_BIKE, {
-        variables: {
-            searchTerm: searchPredicate
-        }
-    });
-    // On lance la recherche au fur et à mesure
-    useEffect(() => {
-        if (searchPredicate !== '') {
-            searchBikes();
-        }
-    }, [searchBikes, searchPredicate]);
+        setSelectedPointOfSale(selectedBike ? selectedBike.point_of_sale.id : 1);
+    }, [selectedBike])
 
     // Gestion de l'ajout d'une nouvelle location
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -137,27 +110,10 @@ function RentAdd() {
                     />
                 </Stack>
                 <Stack direction="row" justifyContent="flex-start" spacing={6} sx={{ mt:6 }}>
-                    <Autocomplete
-                        options={searchData?.searchBike ?? []}
-                        // Champ controlé de la partie recherche
-                        inputValue={searchPredicate}
-                        onInputChange={(event, value) => {
-                            setSearchPredicate(value);
-                        }}
-                        // Champ controlé de la partie selection
-                        value={selectedBike}
-                        onChange={(event, value) => {
-                            setSelectedBike(value);
-                            setSelectedPointOfSale(value?.point_of_sale.id);
-                        }}
-                        getOptionLabel={(option) => option.number}
-                        renderOption={(props, option, state) => {
-                            return <li {...props} key={option.id}>{option.number}</li>
-                        }}
-                        renderInput={(params) => <TextField {...params} label="Numéro du vélo" />}
-                        sx={{
-                            minWidth: 200,
-                        }}
+                    <BikeSearchAutocompleteCmp
+                        bikeId={bikeId}
+                        selectedBike={selectedBike}
+                        setSelectedBike={setSelectedBike}
                     />
                     <FormControl sx={{ m: 1, minWidth: 280 }}>
                         <InputLabel id="point-of-sale-select-label">Point de vente</InputLabel>
