@@ -111,6 +111,7 @@ function RentAdd() {
                 </Stack>
                 <Stack direction="row" justifyContent="flex-start" spacing={6} sx={{ mt:6 }}>
                     <BikeSearchAutocompleteCmp
+                        status="AVAILABLE"
                         bikeId={bikeId}
                         selectedBike={selectedBike}
                         setSelectedBike={setSelectedBike}

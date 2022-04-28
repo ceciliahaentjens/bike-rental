@@ -4,14 +4,14 @@ const CoreSQLDataSource = require('./core/sql');
 class Bike extends CoreSQLDataSource {
     tableName = 'bike';
 
-    async search(searchTerm) {
+    async search(searchTerm, status) {
         // Le cache est tributaire du cache des headers de la réponse à la requête HTTP
         // ici
         // cache-control: max-age=3600
         const query = this.knex(this.tableName)
             .connection(this.establishedConnection)
             .select('*')
-            .where('status', 'AVAILABLE')
+            .where('status', status)
             .andWhereILike('number', `%${searchTerm}%`)
             .limit(15);
 

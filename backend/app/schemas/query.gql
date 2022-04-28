@@ -19,6 +19,6 @@ type Query {
     getBike(id: Int!): Bike
 
     "Rechercher un vélo"
-    searchBike(searchTerm: String!): [Bike!]!
+    searchBike(searchTerm: String!, status: String!): [Bike!]!
 
 }

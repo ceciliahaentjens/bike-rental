@@ -10,14 +10,12 @@
 export interface SearchBike_searchBike_point_of_sale {
   __typename: "PointOfSale";
   id: number;
-  label: string;
 }
 
 export interface SearchBike_searchBike {
   __typename: "Bike";
   id: number;
   number: string;
-  status: string;
   point_of_sale: SearchBike_searchBike_point_of_sale;
 }
 
@@ -30,4 +28,5 @@ export interface SearchBike {
 
 export interface SearchBikeVariables {
   searchTerm: string;
+  status: string;
 }

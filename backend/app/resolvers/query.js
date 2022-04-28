@@ -24,7 +24,7 @@ module.exports = {
     },
 
     searchBike(_, args, { dataSources }) {
-        return dataSources.bike.search(args.searchTerm);
+        return dataSources.bike.search(args.searchTerm, args.status);
     },
 
 };

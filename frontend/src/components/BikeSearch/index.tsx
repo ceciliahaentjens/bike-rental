@@ -12,18 +12,20 @@ import { GET_BIKE_DETAILS } from '../../apollo/queries/bikeDetails';
 import { GetBikeDetails } from '../../apollo/queries/__generated__/GetBikeDetails';
 
 type BikeSearchProps = {
+    status: string,
     bikeId: number | undefined,
     selectedBike: Nullable<SearchBike_searchBike>,
     setSelectedBike: Dispatch<SetStateAction<Nullable<SearchBike_searchBike>>>,
 }
 
-function BikeSearch({ bikeId, selectedBike, setSelectedBike }: BikeSearchProps) {
+function BikeSearch({ status, bikeId, selectedBike, setSelectedBike }: BikeSearchProps) {
     const [searchPredicate, setSearchPredicate] = useState<string>('');
 
     // Gestion de la recherche de vélos
     const [searchBikes, { data: searchData }] = useLazyQuery<SearchBike>(SEARCH_BIKE, {
         variables: {
-            searchTerm: searchPredicate
+            searchTerm: searchPredicate,
+            status: status
         }
     });
     // On lance la recherche au fur et à mesure
