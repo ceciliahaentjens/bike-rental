@@ -17,8 +17,11 @@ export const GET_BIKE_DETAILS = gql`
             }
             rents {
                 id
+                client_lastname
+                client_firstname
                 start_date
                 back_date
+                back_date_planned
                 rent_point_of_sale {
                     id
                     label

@@ -35,8 +35,11 @@ export interface GetBikeDetails_getBike_rents_return_point_of_sale {
 export interface GetBikeDetails_getBike_rents {
   __typename: "Rent";
   id: number;
+  client_lastname: string | null;
+  client_firstname: string | null;
   start_date: any;
   back_date: any | null;
+  back_date_planned: any;
   rent_point_of_sale: GetBikeDetails_getBike_rents_rent_point_of_sale;
   return_point_of_sale: GetBikeDetails_getBike_rents_return_point_of_sale | null;
 }
