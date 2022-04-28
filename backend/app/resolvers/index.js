@@ -5,6 +5,7 @@ const {
 } = require('graphql-scalars');
 
 // Types
+const KindOfBike = require('./kindOfBike');
 const Bike = require('./bike');
 const Rent = require('./rent');
 // Query and mutations
@@ -13,6 +14,8 @@ const Mutation = require('./mutation');
 
 module.exports = {
     DateTime,
+
+    KindOfBike,
 
     Bike,
 

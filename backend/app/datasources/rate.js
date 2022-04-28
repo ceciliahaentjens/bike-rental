@@ -1,6 +1,6 @@
 const MyRESTDataSource = require('./core/rest');
 
-const selectedCurrency = ['USD', 'CNY', 'GBP', 'BTC'];
+const authorizedCurrency = ['USD', 'CNY', 'GBP', 'BTC'];
 
 class Rate extends MyRESTDataSource {
     constructor() {
@@ -14,9 +14,21 @@ class Rate extends MyRESTDataSource {
         // Filter the rates
         const selectedRates = Object.fromEntries(Object
             .entries(response.rates)
-            .filter(([key]) => selectedCurrency.includes(key)));
+            .filter(([key]) => authorizedCurrency.includes(key)));
 
         return selectedRates;
+    }
+
+    async convertPriceTo(price, currency) {
+        // Check if the currency is an authorized currency
+        if (!authorizedCurrency.includes(currency)) {
+            throw new Error(`The selected currency (${currency}) isn't authorized.`);
+        }
+
+        const response = await this.get(`/convert?from=EUR&to=${currency}&amount=${price}`);
+        const { result } = response;
+
+        return (result.toFixed(2));
     }
 }
 
