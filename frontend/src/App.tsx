@@ -14,30 +14,34 @@ import BikeDetails from './components/BikeDetails';
 import RentAdd from './components/RentAdd';
 import RentStop from './components/RentStop';
 
-function checkIfPointOfSaleIsExpired() {
+// Contexte
+import { usePointOfSaleContext } from './contexts/pointOfSale';
+
+const moment = require('moment');
+
+function checkIfPointOfSaleIsExpired(storedPointOfSale: any) {
   console.log('hello');
-  const storedPointOfSaleTimestamp = localStorage.getItem('stored-point-of-sale-expire');
-  
   // Check if the key exists in localStorage
-  if (storedPointOfSaleTimestamp === null) { return; }
+  if (storedPointOfSale.expire === '') { return; }
+  
+  const now = moment();
+  const then = moment(JSON.parse(storedPointOfSale.expire));
 
-  const then = new Date(JSON.parse(storedPointOfSaleTimestamp));
-  const now = new Date();
-
-  // Je calcule la différence entre les deux dates (now & then)
-  const msBetweenDates = Math.abs(then.getTime() - now.getTime());
-  const hoursBetweenDates = msBetweenDates / (60 * 60 * 1000);
-
-  // Si la date est + 24 heures
-  if (hoursBetweenDates > 24) {
+  if (now.isAfter(then)) {
     // Je supprime les éléments du localStorage
-    localStorage.removeItem('stored-point-of-sale')
-    localStorage.removeItem('stored-point-of-sale-expire')
+    localStorage.removeItem('point-of-sale');
   }
 }
 
 function App() {
-  checkIfPointOfSaleIsExpired();
+  // Je récupère le point de vente enregistré par l'utilisateur
+  const { storedPointOfSale, setStoredPointOfSale } = usePointOfSaleContext();
+
+  // Je vérifie seulement au premier rendu si le point de vente a expiré
+  useEffect(() => {
+    checkIfPointOfSaleIsExpired(storedPointOfSale);
+  }, [])
+
   return (
     <React.Fragment>
       <CssBaseline />

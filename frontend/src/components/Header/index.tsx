@@ -21,8 +21,8 @@ function Header() {
                     }}
                 >
                     {
-                        storedPointOfSale.id && (
-                            <Typography color="warning" sx={{ mr: 2 }}>Point de vente actuel&nbsp;: {storedPointOfSale.label}</Typography>
+                        storedPointOfSale.pointOfSale && (
+                            <Typography color="warning" sx={{ mr: 2 }}>Point de vente actuel&nbsp;: {storedPointOfSale.pointOfSale.label}</Typography>
                         )
                     }
                     <Button color="inherit" component={Link} to='/'>Accueil</Button>

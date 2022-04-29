@@ -6,29 +6,29 @@ import { createContext, useContext } from "react";
 
 import useLocalStorage from '../hooks/useLocalStorage';
 
-import { PointOfSale } from '../types';
+import { PointOfSaleLSType } from '../types';
 
-const emptyPointOfSale: PointOfSale = {
-    label: ''
+const emptyPointOfSale: PointOfSaleLSType = {
+    pointOfSale: null,
+    expire: ''
 };
 
 // typage du contexte que l'on définit
 export type PointOfSaleContextType = {
-    storedPointOfSale: PointOfSale,
-    setStoredPointOfSale: (newValue: PointOfSale) => void
+    storedPointOfSale: PointOfSaleLSType,
+    setStoredPointOfSale: (newValue: PointOfSaleLSType) => void
 };
 
 // valeur initiale de notre contexte
 const initialContext: PointOfSaleContextType = {
     storedPointOfSale: emptyPointOfSale,
-    setStoredPointOfSale: (newValue: PointOfSale) => { },
+    setStoredPointOfSale: (newValue: PointOfSaleLSType) => { },
 };
 
 export const PointOfSaleContext = createContext<PointOfSaleContextType>(initialContext);
 
-// Le composant ContextProvider permet de nous brancher sur le Contexte UserContext
-// i.e : le contexte UserContext sera accessible dans les composants enfant de ContextProvider
-export const ContextProvider = ({ children }: { children: React.ReactNode }) => {
+// Le composant PointOfSaleContextProvider permet de nous brancher sur le Contexte PointOfSaleContext
+export const PointOfSaleContextProvider = ({ children }: { children: React.ReactNode }) => {
 
     const [storedPointOfSale, setStoredPointOfSale] = useLocalStorage('point-of-sale', emptyPointOfSale);
 

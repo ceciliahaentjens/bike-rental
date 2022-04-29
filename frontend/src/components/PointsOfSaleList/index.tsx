@@ -9,19 +9,22 @@ import { GetAllPointsOfSale_getAllPointsOfSale, GetAllPointsOfSale } from '../..
 import { GET_ALL_POINTS_OF_SALE } from '../../apollo/queries/allPointsOfSale';
 import { Link } from 'react-router-dom';
 
+// Helpers
+import { getTomorrow } from '../../helpers/moment';
+
+
 // Contexte
 import { usePointOfSaleContext } from '../../contexts/pointOfSale';
 
 function PointsOfSaleList() {
+    // Je récupère le point de vente enregistré par l'utilisateur
     const { storedPointOfSale, setStoredPointOfSale } = usePointOfSaleContext();
 
     // Je récupère les données de ma query
     const { data: pointsOfSaleData } = useQuery<GetAllPointsOfSale>(GET_ALL_POINTS_OF_SALE);
 
-    // Je récupère le point de vente enregistré par l'utilisateur
-
     // Je mets à jour le point de vente sélectionné par l'utilisateur
-    const [selectedPointOfSale, setSelectedPointOfSale] = useState(storedPointOfSale.id ? storedPointOfSale.id : 1);
+    const [selectedPointOfSale, setSelectedPointOfSale] = useState(storedPointOfSale.pointOfSale ? storedPointOfSale.pointOfSale.id : 1);
 
     return (
         <Container>
@@ -35,9 +38,9 @@ function PointsOfSaleList() {
             >
                 <Stack>
                     {
-                        !storedPointOfSale.id
+                        !storedPointOfSale.pointOfSale
                             ? <Typography variant="body1" sx={{mb:2}}>Veuillez renseigner votre point de vente&nbsp;:</Typography>
-                            : <Typography variant="body1" sx={{mb:2}}>Votre connexion actuelle est liée au point de vente suivant&nbsp;: {storedPointOfSale.label}</Typography>
+                            : <Typography variant="body1" sx={{mb:2}}>Votre connexion actuelle est liée au point de vente suivant&nbsp;: {storedPointOfSale.pointOfSale.label}</Typography>
                     }
                     <FormControl fullWidth>
                         <InputLabel id="point-of-sale-select-label">Point de vente</InputLabel>
@@ -70,20 +73,20 @@ function PointsOfSaleList() {
                             
                             // Je mets à jour mon localStorage
                             if (newPointOfSale) {
-                                setStoredPointOfSale(newPointOfSale)
+                                setStoredPointOfSale({
+                                    pointOfSale: newPointOfSale,
+                                    expire: JSON.stringify(getTomorrow())
+                                })
                             }
-
-                            // J'ajoute le timestamp pour l'expiration
-                            localStorage.setItem('stored-point-of-sale-expire', JSON.stringify(Date.now()));
                         }}
                     >
                         {
-                            !storedPointOfSale.id ? 'Valider' : 'Changer de point de vente'
+                            !storedPointOfSale.pointOfSale ? 'Valider' : 'Changer de point de vente'
                         }
                     </Button>
                 </Stack>
                 {
-                    storedPointOfSale.id && (
+                    storedPointOfSale.pointOfSale && (
                         <Stack sx={{ mt: 6 }}>
                             <Button fullWidth color="success" variant="contained" sx={{ mt: 2 }} component={Link} to="/rents/new">Démarrer une location</Button>
                             <Button fullWidth color="warning" variant="contained" sx={{ mt: 2 }} component={Link} to="/rents/stop">Réceptionner une location</Button>

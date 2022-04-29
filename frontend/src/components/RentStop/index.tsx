@@ -35,7 +35,7 @@ function RentStop() {
     const [selectedBike, setSelectedBike] = useState<Nullable<SearchBike_searchBike>>(null);
     const [rentToDisplay, setRentToDisplay] = useState<Nullable<GetBikeDetails_getBike_rents>>(null);
     const [selectedPointOfSale, setSelectedPointOfSale] = useState<number>(() => {
-        return storedPointOfSale.id ? storedPointOfSale.id : 1;
+        return storedPointOfSale.pointOfSale && storedPointOfSale.pointOfSale.id ? storedPointOfSale.pointOfSale.id : 1;
     });
     
     // Gestion des lazy queries

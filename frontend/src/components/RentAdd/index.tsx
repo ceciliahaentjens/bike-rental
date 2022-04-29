@@ -37,7 +37,7 @@ function RentAdd() {
     const [clientLastname, setClientLastname] = useState<string>('');
     const [clientFirstname, setClientFirstname] = useState<string>('');
     const [selectedPointOfSale, setSelectedPointOfSale] = useState<number>(1);
-    const [selectedReturnDate, setSelectedReturnDate] = useState<Date | null>(() => getTomorrow());
+    const [selectedReturnDate, setSelectedReturnDate] = useState<Date | null>(() => getTomorrow().toDate());
     const [selectedBike, setSelectedBike] = useState<Nullable<SearchBike_searchBike>>(null);
 
     // Update the return date
