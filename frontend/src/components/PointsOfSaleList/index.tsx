@@ -9,20 +9,19 @@ import { GetAllPointsOfSale_getAllPointsOfSale, GetAllPointsOfSale } from '../..
 import { GET_ALL_POINTS_OF_SALE } from '../../apollo/queries/allPointsOfSale';
 import { Link } from 'react-router-dom';
 
+// Contexte
+import { usePointOfSaleContext } from '../../contexts/pointOfSale';
 
-type IndexProps = {
-    storedPointOfSale: GetAllPointsOfSale_getAllPointsOfSale | null,
-    setStoredPointOfSale: Dispatch<any>
-}
+function PointsOfSaleList() {
+    const { storedPointOfSale, setStoredPointOfSale } = usePointOfSaleContext();
 
-function PointsOfSaleList({ storedPointOfSale, setStoredPointOfSale }: IndexProps) {
     // Je récupère les données de ma query
     const { data: pointsOfSaleData } = useQuery<GetAllPointsOfSale>(GET_ALL_POINTS_OF_SALE);
 
     // Je récupère le point de vente enregistré par l'utilisateur
 
     // Je mets à jour le point de vente sélectionné par l'utilisateur
-    const [selectedPointOfSale, setSelectedPointOfSale] = useState(storedPointOfSale !== null ? storedPointOfSale.id : 1);
+    const [selectedPointOfSale, setSelectedPointOfSale] = useState(storedPointOfSale.id ? storedPointOfSale.id : 1);
 
     return (
         <Container>
@@ -36,7 +35,7 @@ function PointsOfSaleList({ storedPointOfSale, setStoredPointOfSale }: IndexProp
             >
                 <Stack>
                     {
-                        storedPointOfSale === null
+                        !storedPointOfSale.id
                             ? <Typography variant="body1" sx={{mb:2}}>Veuillez renseigner votre point de vente&nbsp;:</Typography>
                             : <Typography variant="body1" sx={{mb:2}}>Votre connexion actuelle est liée au point de vente suivant&nbsp;: {storedPointOfSale.label}</Typography>
                     }
@@ -68,20 +67,23 @@ function PointsOfSaleList({ storedPointOfSale, setStoredPointOfSale }: IndexProp
                         onClick={() => {
                             // Je récupère l'objet du point de vente sauvegardé
                             const newPointOfSale = pointsOfSaleData?.getAllPointsOfSale.find(element => element.id === selectedPointOfSale);
+                            
+                            // Je mets à jour mon localStorage
+                            if (newPointOfSale) {
+                                setStoredPointOfSale(newPointOfSale)
+                            }
+
                             // J'ajoute le timestamp pour l'expiration
                             localStorage.setItem('stored-point-of-sale-expire', JSON.stringify(Date.now()));
-        
-                            // Je mets à jour mon localStorage
-                            setStoredPointOfSale(newPointOfSale)
                         }}
                     >
                         {
-                            storedPointOfSale === null ? 'Valider' : 'Changer de point de vente'
+                            !storedPointOfSale.id ? 'Valider' : 'Changer de point de vente'
                         }
                     </Button>
                 </Stack>
                 {
-                    storedPointOfSale !== null && (
+                    storedPointOfSale.id && (
                         <Stack sx={{ mt: 6 }}>
                             <Button fullWidth color="success" variant="contained" sx={{ mt: 2 }} component={Link} to="/rents/new">Démarrer une location</Button>
                             <Button fullWidth color="warning" variant="contained" sx={{ mt: 2 }} component={Link} to="/rents/stop">Réceptionner une location</Button>

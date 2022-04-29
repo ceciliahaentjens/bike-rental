@@ -15,6 +15,7 @@ import RentAdd from './components/RentAdd';
 import RentStop from './components/RentStop';
 
 function checkIfPointOfSaleIsExpired() {
+  console.log('hello');
   const storedPointOfSaleTimestamp = localStorage.getItem('stored-point-of-sale-expire');
   
   // Check if the key exists in localStorage
@@ -37,29 +38,18 @@ function checkIfPointOfSaleIsExpired() {
 
 function App() {
   checkIfPointOfSaleIsExpired();
-
-  const [storedPointOfSale, setStoredPointOfSale] = useState(() => {
-    const storedPointOfSale = localStorage.getItem('stored-point-of-sale');
-    return storedPointOfSale !== null ? JSON.parse(storedPointOfSale) : null; 
-  })
-
-  // Si le point de vente enregistré par l'utilisateur change, je change le localStorage
-  useEffect(() => {
-    localStorage.setItem('stored-point-of-sale', JSON.stringify(storedPointOfSale));
-  }, [storedPointOfSale]);
-
   return (
     <React.Fragment>
       <CssBaseline />
-      <Header storedPointOfSale={storedPointOfSale} />
+      <Header />
       <Routes>
-        <Route path="/" element={<PointsOfSaleList storedPointOfSale={storedPointOfSale} setStoredPointOfSale={setStoredPointOfSale} />} />
+        <Route path="/" element={<PointsOfSaleList />} />
         <Route path="/bikes" element={<BikesList />} />
         <Route path="/bikes/:id" element={<BikeDetails />} />
         <Route path="/rents/new/:id" element={<RentAdd />} />
         <Route path="/rents/new" element={<RentAdd />} />
-        <Route path="/rents/stop/:id" element={<RentStop storedPointOfSale={storedPointOfSale} />} />
-        <Route path="/rents/stop" element={<RentStop storedPointOfSale={storedPointOfSale} />} />
+        <Route path="/rents/stop/:id" element={<RentStop />} />
+        <Route path="/rents/stop" element={<RentStop />} />
       </Routes>
       <Footer />
     </React.Fragment>

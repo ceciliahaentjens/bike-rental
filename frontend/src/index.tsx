@@ -7,11 +7,15 @@ import './index.css';
 import { ApolloProvider } from '@apollo/client';
 import apolloClient from './apollo';
 
+import { ContextProvider } from './contexts/pointOfSale';
+
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={apolloClient}>
       <BrowserRouter>
-        <App/>
+        <ContextProvider>
+          <App/>
+        </ContextProvider>
       </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>,

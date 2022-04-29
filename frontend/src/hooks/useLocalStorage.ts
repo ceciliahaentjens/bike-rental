@@ -3,10 +3,8 @@ import { useState } from 'react';
 // ma fonction renvoie un tableau
 // avec 2 cases : la valeur de type T, et la fonction de modif qui prend en param un T
 function useLocalStorage<T>(key: string, initialValue: T): [T, (newValue: T) => void] {
-    console.log('hello');
     const [data, setData] = useState<T>(() => {
         const itemInLocalStorage = window.localStorage.getItem(key);
-        console.log('LS1: ' + itemInLocalStorage);
 
         // si  l'élement existe...
         if (itemInLocalStorage) {
@@ -28,7 +26,6 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (newValue: T) => 
 
     // une fonction pour modifier notre état ET le local storage
     const setValueAndPersist = (newValue: T) => {
-        console.log('LS2: ' + newValue);
         // je range dans useState notre nouvelle valeur
         setData(newValue);
 

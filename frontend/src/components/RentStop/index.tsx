@@ -20,12 +20,12 @@ import { STOP_RENT } from '../../apollo/mutations/stopRent';
 // Homemade Cmp
 import BikeSearchAutocompleteCmp from '../BikeSearch';
 
-type RentStopProps = {
-    storedPointOfSale: GetAllPointsOfSale_getAllPointsOfSale | null
-}
+// Contexte
+import { usePointOfSaleContext } from '../../contexts/pointOfSale';
 
-function RentStop({ storedPointOfSale }: RentStopProps) {
+function RentStop() {
     const navigate = useNavigate();
+    const { storedPointOfSale } = usePointOfSaleContext();
 
     // Je récupère l'id passé en param si il existe
     const { id } = useParams();
@@ -35,7 +35,7 @@ function RentStop({ storedPointOfSale }: RentStopProps) {
     const [selectedBike, setSelectedBike] = useState<Nullable<SearchBike_searchBike>>(null);
     const [rentToDisplay, setRentToDisplay] = useState<Nullable<GetBikeDetails_getBike_rents>>(null);
     const [selectedPointOfSale, setSelectedPointOfSale] = useState<number>(() => {
-        return storedPointOfSale ? storedPointOfSale.id : 1;
+        return storedPointOfSale.id ? storedPointOfSale.id : 1;
     });
     
     // Gestion des lazy queries
