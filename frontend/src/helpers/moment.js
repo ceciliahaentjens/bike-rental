@@ -5,6 +5,11 @@ function getTomorrow() {
     return tomorrow;
 }
 
+function getReadableDate(date) {
+    return moment(date).format('DD/MM/YYYY à HH:mm');
+}
+
 module.exports = {
     getTomorrow,
+    getReadableDate
 }

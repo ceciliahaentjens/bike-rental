@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
 // Helpers
 import { getReadableStatus, isAvailable, isRented } from '../../helpers/status';
+import { getReadableDate } from '../../helpers/moment';
 
 // Mui
-import { Button, Stack, Chip, Container, Paper, Typography, Table, TableContainer, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import { Button, Box, Stack, Chip, Container, Paper, Typography, Table, TableContainer, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 
 // Queries
 import { GET_BIKE_DETAILS } from '../../apollo/queries/bikeDetails';
@@ -51,33 +51,36 @@ function BikeDetails() {
             </Stack>            
             {
                 bike?.rents && bike?.rents.length > 0 && (
-                    <TableContainer component={Paper} sx={{ mt: 6 }}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Départ de</TableCell>
-                                    <TableCell>Date</TableCell>
-                                    <TableCell>Retour à</TableCell>
-                                    <TableCell>Date</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {
-                                    bike?.rents && bike?.rents.map((rent: GetBikeDetails_getBike_rents) => (
-                                        <TableRow
-                                            key={rent.id}
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell>{rent.rent_point_of_sale.label}</TableCell>
-                                            <TableCell>{rent.start_date}</TableCell>
-                                            <TableCell>{rent.return_point_of_sale ? rent.return_point_of_sale.label : ''}</TableCell>
-                                            <TableCell>{rent.back_date ?? ''}</TableCell>
-                                        </TableRow>
-                                    ))
-                                }
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                    <Box sx={{ mt: 6 }}>
+                        <Typography variant="h4" sx={{ mb: 2 }}>Historique des locations</Typography>
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Départ de</TableCell>
+                                        <TableCell>Date</TableCell>
+                                        <TableCell>Retour à</TableCell>
+                                        <TableCell>Date</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {
+                                        bike?.rents && bike?.rents.map((rent: GetBikeDetails_getBike_rents) => (
+                                            <TableRow
+                                                key={rent.id}
+                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            >
+                                                <TableCell>{rent.rent_point_of_sale.label}</TableCell>
+                                                <TableCell>{getReadableDate(rent.start_date)}</TableCell>
+                                                <TableCell>{rent.return_point_of_sale ? rent.return_point_of_sale.label : ''}</TableCell>
+                                                <TableCell>{rent.back_date ? getReadableDate(rent.back_date) : ''}</TableCell>
+                                            </TableRow>
+                                        ))
+                                    }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Box>
                 )
             }
             
