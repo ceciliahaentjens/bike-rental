@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -20,7 +20,6 @@ import { usePointOfSaleContext } from './contexts/pointOfSale';
 const moment = require('moment');
 
 function checkIfPointOfSaleIsExpired(storedPointOfSale: any) {
-  console.log('hello');
   // Check if the key exists in localStorage
   if (storedPointOfSale.expire === '') { return; }
   
@@ -35,7 +34,7 @@ function checkIfPointOfSaleIsExpired(storedPointOfSale: any) {
 
 function App() {
   // Je récupère le point de vente enregistré par l'utilisateur
-  const { storedPointOfSale, setStoredPointOfSale } = usePointOfSaleContext();
+  const { storedPointOfSale } = usePointOfSaleContext();
 
   // Je vérifie seulement au premier rendu si le point de vente a expiré
   useEffect(() => {

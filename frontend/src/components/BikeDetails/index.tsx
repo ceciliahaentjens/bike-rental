@@ -18,7 +18,7 @@ function BikeDetails() {
     const { id } = useParams();
     const bikeId = Number(id);
 
-    const { loading, data: bikeData } = useQuery<GetBikeDetails>(GET_BIKE_DETAILS, {
+    const { data: bikeData } = useQuery<GetBikeDetails>(GET_BIKE_DETAILS, {
         variables: {
             getBikeId: bikeId
         },

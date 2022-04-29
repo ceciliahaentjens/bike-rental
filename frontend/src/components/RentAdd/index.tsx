@@ -73,7 +73,7 @@ function RentAdd() {
 
     // Gestion de l'ajout d'une nouvelle location
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [addRent, { error }] = useMutation<addRent, addRentVariables>(ADD_RENT, {
+    const [addRent] = useMutation<addRent, addRentVariables>(ADD_RENT, {
         onError: (error) => {
             setErrorMessage(error.message)
         },
