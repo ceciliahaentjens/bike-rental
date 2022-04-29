@@ -58,8 +58,8 @@ function App() {
         <Route path="/bikes/:id" element={<BikeDetails />} />
         <Route path="/rents/new/:id" element={<RentAdd />} />
         <Route path="/rents/new" element={<RentAdd />} />
-        <Route path="/rents/stop/:id" element={<RentStop />} />
-        <Route path="/rents/stop" element={<RentStop />} />
+        <Route path="/rents/stop/:id" element={<RentStop storedPointOfSale={storedPointOfSale} />} />
+        <Route path="/rents/stop" element={<RentStop storedPointOfSale={storedPointOfSale} />} />
       </Routes>
       <Footer />
     </React.Fragment>

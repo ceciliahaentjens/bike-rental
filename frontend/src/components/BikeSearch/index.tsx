@@ -8,8 +8,6 @@ import { Autocomplete, TextField } from '@mui/material';
 // Queries
 import { SearchBike, SearchBike_searchBike } from '../../apollo/queries/__generated__/SearchBike';
 import { SEARCH_BIKE } from '../../apollo/queries/searchBike';
-import { GET_BIKE_DETAILS } from '../../apollo/queries/bikeDetails';
-import { GetBikeDetails } from '../../apollo/queries/__generated__/GetBikeDetails';
 
 type BikeSearchProps = {
     status: string,
@@ -35,25 +33,6 @@ function BikeSearch({ status, bikeId, selectedBike, setSelectedBike }: BikeSearc
         }
     }, [searchBikes, searchPredicate]);
 
-    // Gestion de la sélection d'un vélo
-    const [getBike, { data: bikeData }] = useLazyQuery<GetBikeDetails>(GET_BIKE_DETAILS, {
-        variables: {
-            getBikeId: bikeId
-        }
-    });
-    
-    // On execute la suite si on possède le paramètre bikeId
-    useEffect(() => {
-        if (bikeId) {
-            getBike();
-            if (bikeData && bikeData?.getBike !== null) {
-                const myBike = bikeData?.getBike;
-                setSelectedBike(myBike);
-            }
-        }
-    }, [bikeId, bikeData, getBike, setSelectedBike]);
-    
-
     return (
         <Autocomplete
             options={searchData?.searchBike ?? []}
@@ -68,6 +47,7 @@ function BikeSearch({ status, bikeId, selectedBike, setSelectedBike }: BikeSearc
                 setSelectedBike(value);
             }}
             getOptionLabel={(option) => option.number}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             renderOption={(props, option, state) => {
                 return <li {...props} key={option.id}>{option.number}</li>
             }}

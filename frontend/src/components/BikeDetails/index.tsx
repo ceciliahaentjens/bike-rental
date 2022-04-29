@@ -43,7 +43,9 @@ function BikeDetails() {
                 }
                 {
                     isRented(bike?.status) && (
-                        <Button color="primary" variant="contained">Terminer une location</Button>
+                        <Button color="primary" variant="contained" component={Link} to={{
+                            pathname: `/rents/stop/${bike?.id}`
+                        }}>Terminer une location</Button>
                     )
                 }
             </Stack>            

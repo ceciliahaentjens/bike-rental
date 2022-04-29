@@ -7,6 +7,7 @@ import { Container, Typography, Box, Button, FormControl, InputLabel, Select, Me
 // Queries
 import { GetAllPointsOfSale_getAllPointsOfSale, GetAllPointsOfSale } from '../../apollo/queries/__generated__/GetAllPointsOfSale';
 import { GET_ALL_POINTS_OF_SALE } from '../../apollo/queries/allPointsOfSale';
+import { Link } from 'react-router-dom';
 
 
 type IndexProps = {
@@ -82,9 +83,9 @@ function PointsOfSaleList({ storedPointOfSale, setStoredPointOfSale }: IndexProp
                 {
                     storedPointOfSale !== null && (
                         <Stack sx={{ mt: 6 }}>
-                            <Button fullWidth color="success" variant="contained" sx={{ mt: 2 }}>Démarrer une location</Button>
-                            <Button fullWidth color="warning" variant="contained" sx={{ mt: 2 }}>Réceptionner une location</Button>
-                            <Button fullWidth color="primary" variant="contained" sx={{ mt: 2 }}>Voir tous les vélos</Button>
+                            <Button fullWidth color="success" variant="contained" sx={{ mt: 2 }} component={Link} to="/rents/new">Démarrer une location</Button>
+                            <Button fullWidth color="warning" variant="contained" sx={{ mt: 2 }} component={Link} to="/rents/stop">Réceptionner une location</Button>
+                            <Button fullWidth color="primary" variant="contained" sx={{ mt: 2 }} component={Link} to="/bikes">Voir tous les vélos</Button>
                         </Stack>
                     )
                 }

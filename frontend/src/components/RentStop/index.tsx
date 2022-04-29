@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router';
 import { Nullable } from '../../types';
 
 // Mui
-import { Container, Typography, Divider, Box, Button, FormControl, InputLabel, Select, MenuItem, Stack } from '@mui/material';
+import { Container, Typography, Divider, Box, Button, FormControl, InputLabel, Select, MenuItem, Stack, Alert } from '@mui/material';
 
 // Queries
 import { SearchBike_searchBike } from '../../apollo/queries/__generated__/SearchBike';
@@ -20,7 +20,11 @@ import { STOP_RENT } from '../../apollo/mutations/stopRent';
 // Homemade Cmp
 import BikeSearchAutocompleteCmp from '../BikeSearch';
 
-function RentStop() {
+type RentStopProps = {
+    storedPointOfSale: GetAllPointsOfSale_getAllPointsOfSale | null
+}
+
+function RentStop({ storedPointOfSale }: RentStopProps) {
     const navigate = useNavigate();
 
     // Je récupère l'id passé en param si il existe
@@ -31,9 +35,6 @@ function RentStop() {
     const [selectedBike, setSelectedBike] = useState<Nullable<SearchBike_searchBike>>(null);
     const [rentToDisplay, setRentToDisplay] = useState<Nullable<GetBikeDetails_getBike_rents>>(null);
     const [selectedPointOfSale, setSelectedPointOfSale] = useState<number>(() => {
-        // Je récupère la donnée dans le localStorage
-        const stored = localStorage.getItem('stored-point-of-sale');
-        const storedPointOfSale = stored ? JSON.parse(stored) : null;
         return storedPointOfSale ? storedPointOfSale.id : 1;
     });
     
@@ -45,34 +46,26 @@ function RentStop() {
         }
     });
 
+    // À chaque fois que bikeData change (et si on a bien récupéré les données)
+    // On execute l'effet suivant
     useEffect(() => {
-        if (bikeData) {
-            displayCurrentRent();
-        }
-    }, [bikeData]);
-
-    // On affiche la location en cours du vélo sélectionné
-    function displayCurrentRent() {
-        getBike();
-        const bike = bikeData?.getBike;
-
         // On vérifie qu'on a bien récupéré un vélo ayant des locations
-        if (bike && bike?.rents !== null) {
+        if (bikeData && bikeData.getBike?.rents !== null) {
             // On récupère la première location qui n'a pas de date de retour (location en cours)
-            const currentBikeRent = bike.rents.find((rent: GetBikeDetails_getBike_rents) => rent.back_date === null);
+            const currentBikeRent = bikeData.getBike?.rents.find((rent: GetBikeDetails_getBike_rents) => rent.back_date === null);
             
             setRentToDisplay(currentBikeRent ?? null);
 
             // On récupère les points de vente
             getPointOfSales();
         }
-    }
+    }, [bikeId, bikeData, getPointOfSales])
 
     // Gestion de la soumission du formulaire
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [stopRent, { error }] = useMutation<stopRent, stopRentVariables>(STOP_RENT, {
+    const [stopRent] = useMutation<stopRent, stopRentVariables>(STOP_RENT, {
         onError: (error) => {
-            console.log(error)
+            setErrorMessage(error.message)
         },
         onCompleted: (data) => {
             navigate(`/bikes/${data.stopRent?.bike.id}`);
@@ -99,6 +92,7 @@ function RentStop() {
         <Container>
             <Typography variant="h2" sx={{ mb: 6, textAlign: 'center' }}>Terminer une location</Typography>
             <Box>
+                {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
                 <Stack direction="row" justifyContent="flex-start" spacing={3}>
                     <BikeSearchAutocompleteCmp
                         status="RENT"
@@ -108,7 +102,7 @@ function RentStop() {
                     />
                     <Button
                         variant="contained"
-                        onClick={displayCurrentRent}
+                        onClick={() => { getBike(); }}
                     >Suivant</Button>
                 </Stack>
                 {
@@ -139,8 +133,8 @@ function RentStop() {
                                         }}
                                     >
                                         {
-                                            pointsOfSaleData && pointsOfSaleData.getAllPointsOfSale.map((pointOfSale: GetAllPointsOfSale_getAllPointsOfSale) => (
-                                                <MenuItem key={pointOfSale.id} value={pointOfSale.id}>{pointOfSale.label}</MenuItem>
+                                            pointsOfSaleData && pointsOfSaleData.getAllPointsOfSale.map((pointOfSaleItem: GetAllPointsOfSale_getAllPointsOfSale) => (
+                                                <MenuItem key={pointOfSaleItem.id} value={pointOfSaleItem.id}>{pointOfSaleItem.label}</MenuItem>
                                             ))
                                         }
                                     </Select>

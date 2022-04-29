@@ -18,9 +18,9 @@ import { GetAllPointsOfSale_getAllPointsOfSale, GetAllPointsOfSale } from '../..
 import { GET_ALL_POINTS_OF_SALE } from '../../apollo/queries/allPointsOfSale';
 
 function BikesList() {
-    const [type, setType] = useState('');
-    const [status, setStatus] = useState('');
-    const [pointOfSale, setPointOfSale] = useState('');
+    const [selectedType, setSelectedType] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState('');
+    const [selectedPointOfSale, setSelectedPointOfSale] = useState('');
     const [searchFilter, setSearchFilter] = useState<getAllBikesVariables>({ take: 20 });
 
     // Je récupère les données de mes queries
@@ -51,9 +51,9 @@ function BikesList() {
                     event.preventDefault();
 
                     setSearchFilter({ ...searchFilter,
-                        status: status !== '' ? status : undefined,
-                        kindOfBikeId: type !== '' ? Number(type) : undefined,
-                        pointOfSaleId: pointOfSale !== '' ? Number(pointOfSale) : undefined
+                        status: selectedStatus !== '' ? selectedStatus : undefined,
+                        kindOfBikeId: selectedType !== '' ? Number(selectedType) : undefined,
+                        pointOfSaleId: selectedPointOfSale !== '' ? Number(selectedPointOfSale) : undefined
                     });
                 }}
             >
@@ -63,9 +63,9 @@ function BikesList() {
                         labelId="type-select-label"
                         id="type-select"
                         label="Type"
-                        value={type}
+                        value={selectedType}
                         onChange={(event) => {
-                            setType(event.target.value);
+                            setSelectedType(event.target.value);
                         }}
                     >
                         {
@@ -81,9 +81,9 @@ function BikesList() {
                         labelId="status-select-label"
                         id="status-select"
                         label="Statut"
-                        value={status}
+                        value={selectedStatus}
                         onChange={(event) => {
-                            setStatus(event.target.value);
+                            setSelectedStatus(event.target.value);
                         }}
                     >
                         {
@@ -99,14 +99,14 @@ function BikesList() {
                         labelId="point-of-sale-select-label"
                         id="point-of-sale-select"
                         label="Point de vente"
-                        value={pointOfSale}
+                        value={selectedPointOfSale}
                         onChange={(event) => {
-                            setPointOfSale(event.target.value);
+                            setSelectedPointOfSale(event.target.value);
                         }}
                     >
                         {
-                            pointsOfSaleData && pointsOfSaleData.getAllPointsOfSale.map((pointOfSale: GetAllPointsOfSale_getAllPointsOfSale) => (
-                                <MenuItem key={pointOfSale.id} value={pointOfSale.id}>{pointOfSale.label}</MenuItem>
+                            pointsOfSaleData && pointsOfSaleData.getAllPointsOfSale.map((pointOfSaleItem: GetAllPointsOfSale_getAllPointsOfSale) => (
+                                <MenuItem key={pointOfSaleItem.id} value={pointOfSaleItem.id}>{pointOfSaleItem.label}</MenuItem>
                             ))
                         }
                     </Select>
@@ -149,12 +149,16 @@ function BikesList() {
                                             <Button color="primary" variant="contained" sx={{ mr: 2 }} component={Link} to={`/bikes/${bike.id}`}>Détails</Button>
                                             {
                                                 isAvailable(bike.status) && (
-                                                    <Button color="success" variant="contained">Louer</Button>
+                                                    <Button color="success" variant="contained" component={Link} to={{
+                                                        pathname: `/rents/new/${bike.id}`
+                                                    }}>Louer</Button>
                                                 )
                                             }
                                             {
                                                 isRented(bike.status) && (
-                                                    <Button color="warning" variant="contained">Terminer une location</Button>
+                                                    <Button color="warning" variant="contained" component={Link} to={{
+                                                        pathname: `/rents/stop/${bike.id}`
+                                                    }}>Terminer une location</Button>
                                                 )
                                             }
                                         </Box>

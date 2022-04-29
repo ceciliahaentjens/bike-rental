@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useLazyQuery, useMutation } from '@apollo/client';
 import { useNavigate, useParams } from 'react-router';
 import { Nullable } from '../../types';
 
@@ -13,6 +13,8 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { GetAllPointsOfSale_getAllPointsOfSale, GetAllPointsOfSale } from '../../apollo/queries/__generated__/GetAllPointsOfSale';
 import { GET_ALL_POINTS_OF_SALE } from '../../apollo/queries/allPointsOfSale';
 import { SearchBike_searchBike } from '../../apollo/queries/__generated__/SearchBike';
+import { GET_BIKE_DETAILS } from '../../apollo/queries/bikeDetails';
+import { GetBikeDetails } from '../../apollo/queries/__generated__/GetBikeDetails';
 
 // Mutations
 import { addRent, addRentVariables } from '../../apollo/mutations/__generated__/addRent';
@@ -51,11 +53,29 @@ function RentAdd() {
         setSelectedPointOfSale(selectedBike ? selectedBike.point_of_sale.id : 1);
     }, [selectedBike])
 
+    // Gestion de la sélection d'un vélo
+    const [getBike, { data: bikeData }] = useLazyQuery<GetBikeDetails>(GET_BIKE_DETAILS, {
+        variables: {
+            getBikeId: bikeId
+        }
+    });
+    
+    // On execute la suite si on possède le paramètre bikeId
+    useEffect(() => {
+        if (bikeId) {
+            getBike();
+            if (bikeData && bikeData?.getBike !== null) {
+                const myBike = bikeData?.getBike;
+                setSelectedBike(myBike);
+            }
+        }
+    }, [bikeId, bikeData, getBike, setSelectedBike]);
+
     // Gestion de l'ajout d'une nouvelle location
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [addRent, { error }] = useMutation<addRent, addRentVariables>(ADD_RENT, {
         onError: (error) => {
-            console.log(error)
+            setErrorMessage(error.message)
         },
         onCompleted: (data) => {
             navigate(`/bikes/${data.createRent?.bike.id}`);
@@ -129,8 +149,8 @@ function RentAdd() {
                             }}
                         >
                             {
-                                pointsOfSaleData && pointsOfSaleData.getAllPointsOfSale.map((pointOfSale: GetAllPointsOfSale_getAllPointsOfSale) => (
-                                    <MenuItem key={pointOfSale.id} value={pointOfSale.id}>{pointOfSale.label}</MenuItem>
+                                pointsOfSaleData && pointsOfSaleData.getAllPointsOfSale.map((pointOfSaleItem: GetAllPointsOfSale_getAllPointsOfSale) => (
+                                    <MenuItem key={pointOfSaleItem.id} value={pointOfSaleItem.id}>{pointOfSaleItem.label}</MenuItem>
                                 ))
                             }
                         </Select>
