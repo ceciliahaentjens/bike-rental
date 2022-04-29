@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 
 // Mui
@@ -8,25 +8,20 @@ import { Container, Typography, Box, Button, FormControl, InputLabel, Select, Me
 import { GetAllPointsOfSale_getAllPointsOfSale, GetAllPointsOfSale } from '../../apollo/queries/__generated__/GetAllPointsOfSale';
 import { GET_ALL_POINTS_OF_SALE } from '../../apollo/queries/allPointsOfSale';
 
-function PointsOfSaleList() {
+
+type IndexProps = {
+    storedPointOfSale: GetAllPointsOfSale_getAllPointsOfSale | null,
+    setStoredPointOfSale: Dispatch<any>
+}
+
+function PointsOfSaleList({ storedPointOfSale, setStoredPointOfSale }: IndexProps) {
     // Je récupère les données de ma query
     const { data: pointsOfSaleData } = useQuery<GetAllPointsOfSale>(GET_ALL_POINTS_OF_SALE);
 
     // Je récupère le point de vente enregistré par l'utilisateur
-    const [storedPointOfSale, setStoredPointOfSale] = useState(() => {
-        // Je récupère la donnée dans le localStorage
-        const stored = localStorage.getItem('stored-point-of-sale');
-        const initialValue = stored !== null ? JSON.parse(stored) : null;
-        return initialValue;
-    });
 
     // Je mets à jour le point de vente sélectionné par l'utilisateur
     const [selectedPointOfSale, setSelectedPointOfSale] = useState(storedPointOfSale !== null ? storedPointOfSale.id : 1);
-
-    // Si le point de vente enregistré par l'utilisateur change, je change le localStorage
-    useEffect(() => {
-        localStorage.setItem('stored-point-of-sale', JSON.stringify(storedPointOfSale));
-    }, [storedPointOfSale]);
 
     return (
         <Container>

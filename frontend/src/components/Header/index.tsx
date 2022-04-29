@@ -4,9 +4,13 @@ import {
     AppBar, Toolbar, Button, Typography, Box
 } from '@mui/material';
 
-function Header() {
-    const pointOfSale = localStorage.getItem('stored-point-of-sale');
+import { GetAllPointsOfSale_getAllPointsOfSale } from '../../apollo/queries/__generated__/GetAllPointsOfSale';
 
+type HeaderProps = {
+    storedPointOfSale: GetAllPointsOfSale_getAllPointsOfSale | null
+}
+
+function Header({ storedPointOfSale }: HeaderProps) {
     return (
         <AppBar component="header" position="static" sx={{ mb: 4 }}>
             <Toolbar sx={{ display: 'flex', flexGrow: 1, justifyContent: 'space-between' }}>
@@ -18,8 +22,8 @@ function Header() {
                     }}
                 >
                     {
-                        pointOfSale !== null && (
-                            <Typography color="warning" sx={{ mr: 2 }}>Point de vente actuel&nbsp;: {JSON.parse(pointOfSale).label}</Typography>
+                        storedPointOfSale !== null && (
+                            <Typography color="warning" sx={{ mr: 2 }}>Point de vente actuel&nbsp;: {storedPointOfSale.label}</Typography>
                         )
                     }
                     <Button color="inherit" component={Link} to='/'>Accueil</Button>

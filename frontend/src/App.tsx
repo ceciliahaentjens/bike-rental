@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -37,12 +37,23 @@ function checkIfPointOfSaleIsExpired() {
 
 function App() {
   checkIfPointOfSaleIsExpired();
+
+  const [storedPointOfSale, setStoredPointOfSale] = useState(() => {
+    const storedPointOfSale = localStorage.getItem('stored-point-of-sale');
+    return storedPointOfSale !== null ? JSON.parse(storedPointOfSale) : null; 
+  })
+
+  // Si le point de vente enregistré par l'utilisateur change, je change le localStorage
+  useEffect(() => {
+    localStorage.setItem('stored-point-of-sale', JSON.stringify(storedPointOfSale));
+  }, [storedPointOfSale]);
+
   return (
     <React.Fragment>
       <CssBaseline />
-      <Header />
+      <Header storedPointOfSale={storedPointOfSale} />
       <Routes>
-        <Route path="/" element={<PointsOfSaleList />} />
+        <Route path="/" element={<PointsOfSaleList storedPointOfSale={storedPointOfSale} setStoredPointOfSale={setStoredPointOfSale} />} />
         <Route path="/bikes" element={<BikesList />} />
         <Route path="/bikes/:id" element={<BikeDetails />} />
         <Route path="/rents/new/:id" element={<RentAdd />} />
