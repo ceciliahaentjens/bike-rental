@@ -1,40 +1,40 @@
-# O'velo GraphQL API
+# Bike rental – Back-end
 
-Voici le repo pour faire le back de l'application O'velo !
-La BDD est déjà prête à être installer !
+The back-end is built with [Node.js](https://nodejs.org/en/), [GraphQL](https://graphql.org/) and [Apollo Server](https://www.apollographql.com/docs/apollo-server/).
 
-## Installation
+## First install
+
+If it’s your first install, please follow these instructions&nbsp;:
 
 ```bash
-# Copier le fichier d'environnement. La config de base est déjà spécifier dans le fichier d'exemple
+# Copy/paster the .env.example file
 cp .env.example .env
-# Installation des dépendances
+# Install dependencies
 npm install
 ```
 
-## Création de la BDD
+## Create the database
 
-Pour initialiser votre BDD à 0 il suffit de lancer le script
+Run the script to initialize your local database&nbsp;:
 
 ```bash
 npm run initDB
 ```
 
-Cela créera l'utilisateur `ovelo_u` ayant pour mot de passe `ovelo` ainsi que la BDD `ovelo` avec la structure déjà en place.
-
-Pour réinitialiser les données dans la BDD il faut lancer le script
+It will create the user `ovelo_u` with the password `ovelo` in the DB `ovelo`.
+To reinitialize the database&nbsp;:
 
 ```bash
 npm run resetDB
 ```
 
-## Lancement de l'API
+## Run the API
 
 ```bash
 npm run dev
 ```
 
-## documentation
+## Docs
 
 ### MCD
 
@@ -42,8 +42,8 @@ npm run dev
 
 ### Apollo
 
-RDV sur la page de bac à sable de Apollo de l'application web `/`
+ Apollo Sandbox&nbsp;: `/`
 
-### Info
+---
 
-Pour le moment le projet ne dispose que d'un serveur apollo basique avec une query / mutation / type / input d'exemple
+Have fun&nbsp;!

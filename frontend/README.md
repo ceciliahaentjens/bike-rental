@@ -1,38 +1,25 @@
-# vélO' - React
+# Bike rental – Front-end
 
-Les sources fournies ont été générées automatiquement par la commande `create-react-app` :
+The front-end of this application uses [React](https://fr.reactjs.org/), [Apollo Client](https://www.apollographql.com/docs/react/) and [Material UI](https://mui.com/).
 
-```bash
-# depuis la racine du dépôt
-npx create-react-app frontend
-```
+## First install
 
-Et voici les informations fournies à la fin de l'exécution :
+If it’s your first install, please run `npm install`.
 
-```bash
-Inside that directory, you can run several commands:
+## Run the app
 
-  npm start
-    Starts the development server.
+To start the development server, use `npm start`.
 
-  npm run build
-    Bundles the app into static files for production.
+## Build for prod
 
-  npm test
-    Starts the test runner.
+To bundle the app into static files for production, use `npm run build`.
 
-  npm run eject
-    Removes this tool and copies build dependencies, configuration files
-    and scripts into the app directory. If you do this, you can’t go back!
+## Test the app
 
-We suggest that you begin by typing:
-
-  cd frontend
-  npm start
-```
-
-Mais :warning:, le dossier `node_modules` n'étant pas versionné, il faudra penser à faire un `npm install` :wink:
+To start the test runner, use `npm test`.
 
 ---
 
-A toi désormais d'ajouter une librairie de composants (Material UI par exemple) et de commencer à coder l'interface frontend de l'outil _vélO'_ :tada: :muscle:
+Have fun&nbsp;!
+
+
